@@ -1,165 +1,78 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Modals from "@/components/Modals";
-import TournamentSection from "@/components/TournamentSection";
-import { useModalStore } from "@/lib/modal-store";
+import { useState } from "react";
+import { Payment } from "@/components/payment";
+import { PiPayment } from "@/types";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [isPiInitialized, setIsPiInitialized] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const { openPaymentModal, openTokenSelectionModal } = useModalStore();
+  const router = useRouter();
+  const [selectedProduct] = useState({
+    name: "Premium Digital Product",
+    price: 19.99
+  });
 
-  useEffect(() => {
-    // Initialize Pi SDK
-    const initializePi = async () => {
-      if (typeof window !== "undefined" && (window as any).Pi) {
-        try {
-          await (window as any).Pi.init({ version: "2.0", sandbox: true });
-          setIsPiInitialized(true);
-          console.log("Pi SDK initialized");
-        } catch (error) {
-          console.error("Pi SDK initialization failed:", error);
-        }
-      }
-    };
-
-    initializePi();
-  }, []);
-
-  const authenticatePiUser = async () => {
-    if (!isPiInitialized) return;
-
-    try {
-      const scopes = ['username', 'payments'];
-      const authResult = await (window as any).Pi.authenticate(scopes, onIncompletePaymentFound);
-      setCurrentUser(authResult.user);
-      console.log("Authenticated:", authResult.user);
-    } catch (error) {
-      console.error("Authentication failed:", error);
-    }
-  };
-
-  const onIncompletePaymentFound = (payment: any) => {
-    console.log("Incomplete payment found:", payment);
-    return confirm("You have an incomplete payment. Do you want to continue with this payment?");
+  const handlePaymentComplete = (paymentData: PiPayment) => {
+    console.log("Payment completed successfully:", paymentData);
+    // Redirect to success page with payment data
+    router.push(`/success?paymentId=${paymentData.identifier}&amount=${selectedProduct.price}&product=${encodeURIComponent(selectedProduct.name)}`);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-900 to-purple-800 text-white">
-      <Header />
-      
-      <main className="flex-1 container mx-auto px-4 pt-20 pb-10">
-        {/* Hero Section */}
-        <section className="hero-section text-center py-12 px-4 rounded-2xl mb-8 bg-gradient-to-r from-purple-800 to-purple-700 relative overflow-hidden">
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="relative z-10">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="text-yellow-400">KUZUZANGPOLA!</span> Welcome to B4U Esports
-            </h1>
-            
-            {!currentUser ? (
-              <button
-                onClick={authenticatePiUser}
-                className="pi-auth-btn bg-gradient-to-r from-green-400 to-blue-500 text-black font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 mx-auto mb-4 hover:shadow-lg transition-all"
-                disabled={!isPiInitialized}
-              >
-                {isPiInitialized ? (
-                  <>
-                    <span>Sign In with Pi Network</span>
-                    <span>π</span>
-                  </>
-                ) : (
-                  "Initializing Pi..."
-                )}
-              </button>
-            ) : (
-              <div className="mb-4">
-                <p className="text-lg mb-2">Welcome, {currentUser.username}!</p>
-                <div className="flex gap-2 justify-center flex-wrap">
-                  <button className="pi-action-btn bg-purple-700 px-4 py-2 rounded-lg">
-                    Wallet
-                  </button>
-                  <button className="pi-action-btn bg-purple-700 px-4 py-2 rounded-lg">
-                    Share
-                  </button>
-                </div>
-              </div>
-            )}
-
-            <div className="registration-note bg-purple-800 border-2 border-yellow-400 p-4 rounded-lg max-w-2xl mx-auto mb-6 animate-pulse">
-              <p className="flex items-center justify-center gap-2 flex-wrap">
-                <span className="text-yellow-400">⚠️</span>
-                <span>Using Pi Testnet - No real Pi will be deducted</span>
-              </p>
-            </div>
-
-            <p className="text-xl opacity-90">Your Ultimate Gaming Marketplace</p>
-          </div>
-        </section>
-
-        {/* Marketplace Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* Marketplace Card */}
-          <div className="card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-            <div className="h-48 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-gray-600">Marketplace Image</span>
-            </div>
-            <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
-              <span>🛒</span> Marketplace
-            </h2>
-            <p className="mb-4">Buy and sell gaming accounts and items</p>
-            <button 
-              onClick={() => openPaymentModal('Marketplace Listing', 5, 'marketplace')}
-              className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-black font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition-all"
-            >
-              List Your Item
-            </button>
-          </div>
-
-          {/* In-game Tokens Card */}
-          <div className="card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-            <div className="h-48 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-gray-600">Tokens Image</span>
-            </div>
-            <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
-              <span>🪙</span> In-game Tokens
-            </h2>
-            <p className="mb-4">Purchase various game currencies instantly</p>
-            <button 
-              onClick={openTokenSelectionModal}
-              className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-black font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition-all"
-            >
-              GET TOKENS
-            </button>
-          </div>
-
-          {/* Social Boosting Card */}
-          <div className="card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-            <div className="h-48 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-gray-600">Social Boost Image</span>
-            </div>
-            <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
-              <span>🚀</span> Social Boosting
-            </h2>
-            <p className="mb-4">Boost your online presence</p>
-            <button 
-              onClick={() => openPaymentModal('Social Boost', 15, 'social')}
-              className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-black font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition-all"
-            >
-              BOOST NOW
-            </button>
-          </div>
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            Welcome to Pi Network Store
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+            Experience the future of decentralized commerce with Pi cryptocurrency payments. 
+            Fast, secure, and borderless transactions for the digital age.
+          </p>
         </div>
 
-        {/* Tournament Section */}
-        <TournamentSection />
-      </main>
+        <div className="flex flex-col items-center justify-center">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-semibold mb-2 text-foreground">Your Order</h2>
+            <p className="text-muted-foreground text-lg">
+              {selectedProduct.name} - <strong>{selectedProduct.price} π</strong>
+            </p>
+          </div>
+          
+          <Payment
+            amount={selectedProduct.price}
+            productName={selectedProduct.name}
+            onPaymentComplete={handlePaymentComplete}
+          />
+        </div>
 
-      <Footer />
-      <Modals currentUser={currentUser} />
+        <div className="max-w-2xl mx-auto mt-16 text-center">
+          <h3 className="text-lg font-semibold mb-6 text-foreground">Why Pay with Pi?</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+            <div className="p-4 rounded-lg bg-muted/50 border">
+              <div className="w-10 h-10 bg-[#14b8a6] rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-lg">⚡</span>
+              </div>
+              <h4 className="font-medium mb-2 text-foreground">Instant Transactions</h4>
+              <p className="text-muted-foreground">No waiting for confirmations. Payments are processed instantly.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-muted/50 border">
+              <div className="w-10 h-10 bg-[#14b8a6] rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-lg">🔒</span>
+              </div>
+              <h4 className="font-medium mb-2 text-foreground">Secure & Private</h4>
+              <p className="text-muted-foreground">Your financial data remains private and secure on the blockchain.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-muted/50 border">
+              <div className="w-10 h-10 bg-[#14b8a6] rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-lg">🌍</span>
+              </div>
+              <h4 className="font-medium mb-2 text-foreground">Borderless</h4>
+              <p className="text-muted-foreground">Pay anyone, anywhere in the world without currency conversions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-    }
+}
