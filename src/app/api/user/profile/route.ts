@@ -6,7 +6,7 @@ const profileUpdateSchema = z.object({
   profileData: z.object({
     email: z.string().email(),
     contactNumber: z.string().optional(),
-    country: z.string().min(1),
+    country: z.string().optional(), // Make country optional to match the type definition
     language: z.string().default('en'),
     referralCode: z.string().optional()
   }),
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       data: {
         email: profileData.email,
         contactNumber: profileData.contactNumber || null,
-        country: profileData.country,
+        country: profileData.country || null, // Handle optional country
         language: profileData.language,
         referralCode: profileData.referralCode || null
       },
@@ -155,6 +155,15 @@ export async function POST(request: NextRequest) {
         error: 'Invalid request data',
         details: error.issues
       }, { status: 400 })
+    }
+
+    // Handle database connection errors
+    if (error instanceof Error && (error.message.includes('database') || error.message.includes('Unable to open') || error.message.includes('connection') || error.message.includes('P1001') || error.message.includes('P1010'))) {
+      console.error('Database connection error:', error.message)
+      return NextResponse.json({
+        success: false,
+        error: 'Service temporarily unavailable. Database connection error.'
+      }, { status: 503 })
     }
 
     // Log the specific error for debugging

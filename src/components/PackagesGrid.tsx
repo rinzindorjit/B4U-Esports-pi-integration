@@ -47,6 +47,10 @@ export default function PackagesGrid({ gameType, gameFilter, onPurchase }: Packa
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
+        // Handle service unavailable error specifically
+        if (response.status === 503) {
+          throw new Error('Service temporarily unavailable. Please try again in a few minutes.')
+        }
         throw new Error(errorData.error || `Failed to fetch packages: ${response.status} ${response.statusText}`)
       }
 

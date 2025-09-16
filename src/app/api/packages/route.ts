@@ -33,6 +33,14 @@ export async function GET(request: NextRequest) {
     // Provide more specific error message
     const errorMessage = error instanceof Error ? error.message : 'Failed to fetch packages'
     
+    // If it's a database connection error, provide a more user-friendly message
+    if (errorMessage.includes('database') || errorMessage.includes('Unable to open') || errorMessage.includes('connection') || errorMessage.includes('P1001') || errorMessage.includes('P1010')) {
+      return NextResponse.json({
+        success: false,
+        error: 'Service temporarily unavailable. Database connection error.'
+      }, { status: 503 })
+    }
+    
     return NextResponse.json({
       success: false,
       error: errorMessage
