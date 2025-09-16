@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// User model for Pi Network authenticated users
+model User {
+  id              String   @id @default(cuid())
+  piUserId        String   @unique // Pi Network user ID
+  piUsername      String   @unique // Pi Network username
+  piWalletAddress String   @unique // Pi Network wallet address
+  email           String   @unique
+  contactNumber   String?
+  country         String?
+  language        String   @default("en")
+  referralCode    String?
+  isActive        Boolean  @default(true)
+  isVerified      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Game profiles
+  pubgProfile     PubgProfile?
+  mlbbProfile     MlbbProfile?
+  
+  // Relationships
+  transactions    Transaction[]
+  consentLogs     ConsentLog[]
+  
+  @@map("users")
+}
+
+// PUBG Mobile profile
+model PubgProfile {
+  id        String @id @default(cuid())
+  userId    String @unique
+  ign       String // In-Game Name
+  uid       String // Numeric UID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("pubg_profiles")
+}
+
+// Mobile Legends profile
+model MlbbProfile {
+  id        String @id @default(cuid())
+  userId    String @unique
+  userId_game String // User ID in game
+  zoneId    String // Zone ID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("mlbb_profiles")
+}
+
+// Game packages
+model Package {
+  id           String      @id @default(cuid())
+  name         String      @unique
+  game         GameType
+  description  String?
+  amount       Int         // In-game currency amount (UC or Diamonds)
+  usdtPrice    Float       // Fixed USDT price
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  
+  // Relationships
+  transactions Transaction[]
+  
+  @@map("packages")
+}
+
+// Transaction records
+model Transaction {
+  id               String            @id @default(cuid())
+  userId           String
+  packageId        String
+  piAmount         Float             // Amount in Pi
+  usdtAmount       Float             // Amount in USDT
+  piPriceSnapshot  Float             // Pi price at time of transaction
+  status           TransactionStatus @default(PENDING)
+  piTransactionId  String?           // Pi Network transaction ID
+  gameUserId       String            // Target game user ID
+  gameZoneId       String?           // For MLBB
+  errorMessage     String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  completedAt      DateTime?
+  
+  // Relationships
+  user    User    @relation(fields: [userId], references: [id])
+  package Package @relation(fields: [packageId], references: [id])
+  
+  @@map("transactions")
+}
+
+// Consent logs for Pi Network data sharing
+model ConsentLog {
+  id          String   @id @default(cuid())
+  userId      String
+  consentType String   // "data_sharing", "payment_processing", etc.
+  granted     Boolean
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id])
+  
+  @@map("consent_logs")
+}
+
+// Admin users
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String   // Hashed password
+  role      AdminRole @default(MODERATOR)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
+  
+  @@map("admins")
+}
+
+// Pi price tracking
+model PiPrice {
+  id        String   @id @default(cuid())
+  priceUsd  Float
+  source    String   @default("coingecko")
+  createdAt DateTime @default(now())
+  
+  @@map("pi_prices")
+}
+
+// System settings
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  type  String @default("string")
+  
+  @@map("settings")
+}
+
+// Enums
+enum GameType {
+  PUBG_MOBILE
+  MLBB
+}
+
+enum TransactionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  MODERATOR
+}
