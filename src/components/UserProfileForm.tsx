@@ -595,7 +595,7 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                       )}
                     </div>
                     <img
-                      src="https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png"
+                      src="https://sm.ign.com/ign_za/cover/m/mobile-leg/mobile-legends-bang-bang_c6z8.jpg"
                       alt="Mobile Legends"
                       className="w-12 h-12 rounded-lg object-cover"
                     />

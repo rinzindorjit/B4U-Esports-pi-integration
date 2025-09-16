@@ -166,7 +166,7 @@ export default function Home() {
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:-translate-y-3 group hover:border-purple-400/50">
               <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 rounded-xl overflow-hidden shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                 <Image
-                  src="https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png"
+                  src="https://sm.ign.com/ign_za/cover/m/mobile-leg/mobile-legends-bang-bang_c6z8.jpg"
                   alt="Mobile Legends"
                   width={96}
                   height={96}

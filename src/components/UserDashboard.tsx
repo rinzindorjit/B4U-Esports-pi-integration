@@ -352,7 +352,7 @@ export default function UserDashboard() {
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg">
                     <img
-                      src="https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png"
+                      src="https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png"
                       alt="PUBG Mobile"
                       className="w-12 h-12 rounded-xl object-contain"
                     />
@@ -399,7 +399,7 @@ export default function UserDashboard() {
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
                     <Image
-                      src="https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png"
+                      src="https://sm.ign.com/ign_za/cover/m/mobile-leg/mobile-legends-bang-bang_c6z8.jpg"
                       alt="Mobile Legends"
                       width={48}
                       height={48}

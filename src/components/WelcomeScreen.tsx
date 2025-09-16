@@ -145,7 +145,7 @@ export default function WelcomeScreen() {
               <div className="group bg-white/5 backdrop-blur-xl rounded-xl p-4 border border-white/10 hover:bg-white/15 hover:border-white/30 transition-all duration-300 transform hover:scale-110 hover:-translate-y-3 hover:-rotate-1">
                 <div className="w-16 h-16 mx-auto mb-3 rounded-xl overflow-hidden group-hover:scale-110 transition-transform duration-300">
                   <Image
-                    src="https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png"
+                    src="https://sm.ign.com/ign_za/cover/m/mobile-leg/mobile-legends-bang-bang_c6z8.jpg"
                     alt="Mobile Legends"
                     width={64}
                     height={64}

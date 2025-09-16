@@ -130,7 +130,7 @@ In production, this would process ${piAmount.toFixed(4)} Pi for ${pkg.amount.toL
       case 'PUBG_MOBILE':
         return 'https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png'
       case 'MLBB':
-        return 'https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png'
+        return 'https://sm.ign.com/ign_za/cover/m/mobile-leg/mobile-legends-bang-bang_c6z8.jpg'
       default:
         return 'https://b4uesports.com/wp-content/uploads/2025/04/PI.jpg'
     }
