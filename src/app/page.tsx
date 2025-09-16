@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,7 +15,8 @@ import { Package } from '../types'
 
 type GameType = 'PUBG_MOBILE' | 'MLBB'
 
-export default function Home() {
+// Separate component to handle search params
+function HomeContent() {
   const { isAuthenticated, user } = useAuth()
   const searchParams = useSearchParams()
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
@@ -227,5 +228,25 @@ export default function Home() {
         onPurchaseComplete={handlePurchaseComplete}
       />
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 flex items-center justify-center">
+        <div className="text-center text-white">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center animate-spin">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold mb-2">Loading B4U Esports...</h2>
+          <p className="text-gray-300">Please wait while we prepare your gaming experience</p>
+        </div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   )
 }
