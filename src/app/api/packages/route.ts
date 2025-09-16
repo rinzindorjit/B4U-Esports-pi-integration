@@ -8,6 +8,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const game = searchParams.get('game') as GameType | null
 
+    console.log('Fetching packages with filter:', { game })
+
     const whereClause = {
       isActive: true,
       ...(game && { game })
@@ -18,6 +20,8 @@ export async function GET(request: NextRequest) {
       orderBy: { usdtPrice: 'asc' }
     })
 
+    console.log('Found packages:', packages.length)
+
     return NextResponse.json({
       success: true,
       data: packages
@@ -25,9 +29,13 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('Packages fetch error:', error)
+    
+    // Provide more specific error message
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch packages'
+    
     return NextResponse.json({
       success: false,
-      error: 'Failed to fetch packages'
+      error: errorMessage
     }, { status: 500 })
   }
 }

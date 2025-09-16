@@ -44,8 +44,10 @@ export default function PackagesGrid({ gameType, gameFilter, onPurchase }: Packa
         : '/api/packages'
       
       const response = await fetch(url)
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch packages')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Failed to fetch packages: ${response.status} ${response.statusText}`)
       }
 
       const result = await response.json()
@@ -57,7 +59,8 @@ export default function PackagesGrid({ gameType, gameFilter, onPurchase }: Packa
 
     } catch (err) {
       console.error('Error fetching packages:', err)
-      setError(err instanceof Error ? err.message : 'Unknown error')
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred while loading packages'
+      setError(errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -66,7 +69,7 @@ export default function PackagesGrid({ gameType, gameFilter, onPurchase }: Packa
   if (error) {
     return (
       <div className="text-center py-8">
-        <div className="text-red-600 mb-2">Error loading packages</div>
+        <div className="text-red-600 mb-2">Error loading packages: {error}</div>
         <button
           onClick={fetchPackages}
           className="text-blue-600 hover:underline"

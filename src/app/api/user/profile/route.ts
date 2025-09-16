@@ -41,11 +41,14 @@ export async function POST(request: NextRequest) {
     })
 
     if (!user) {
+      console.error('User not found in database')
       return NextResponse.json({
         success: false,
         error: 'User not found'
       }, { status: 404 })
     }
+
+    console.log('Updating profile for user:', user.id)
 
     // Update user profile
     user = await prisma.user.update({
@@ -68,8 +71,11 @@ export async function POST(request: NextRequest) {
       }
     })
 
+    console.log('User profile updated successfully')
+
     // Update or create PUBG profile
     if (pubgData && user) {
+      console.log('Updating PUBG profile for user:', user.id)
       await prisma.pubgProfile.upsert({
         where: { userId: user.id },
         update: {
@@ -96,10 +102,12 @@ export async function POST(request: NextRequest) {
           }
         }
       })
+      console.log('PUBG profile updated successfully')
     }
 
     // Update or create MLBB profile
     if (mlbbData && user) {
+      console.log('Updating MLBB profile for user:', user.id)
       await prisma.mlbbProfile.upsert({
         where: { userId: user.id },
         update: {
@@ -126,7 +134,10 @@ export async function POST(request: NextRequest) {
           }
         }
       })
+      console.log('MLBB profile updated successfully')
     }
+
+    console.log('Profile update completed successfully for user:', user?.id)
 
     return NextResponse.json({
       success: true,
@@ -138,6 +149,7 @@ export async function POST(request: NextRequest) {
     console.error('Profile update error:', error)
     
     if (error instanceof z.ZodError) {
+      console.error('Validation error:', error.issues)
       return NextResponse.json({
         success: false,
         error: 'Invalid request data',
@@ -145,9 +157,13 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
+    // Log the specific error for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    console.error('Profile update failed with error:', errorMessage)
+
     return NextResponse.json({
       success: false,
-      error: 'Failed to update profile'
+      error: 'Failed to update profile. Please try again.'
     }, { status: 500 })
   }
 }

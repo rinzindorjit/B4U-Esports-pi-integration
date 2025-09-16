@@ -142,18 +142,20 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
         })
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to update profile')
+      const result = await response.json()
+      
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || result.message || 'Failed to update profile')
       }
 
-      const result = await response.json()
       updateProfile(result.user)
       onComplete()
       onClose()
 
     } catch (error) {
       console.error('Profile update failed:', error)
-      alert('Failed to update profile. Please try again.')
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update profile. Please try again.'
+      alert(errorMessage)
     } finally {
       setIsLoading(false)
     }

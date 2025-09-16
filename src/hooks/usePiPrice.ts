@@ -31,12 +31,34 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
       setIsLoading(true)
       setError(null)
 
-      const response = await fetch('/api/pricing/pi-price')
+      // Check if we're in a browser environment
+      if (typeof window === 'undefined') {
+        console.log('Skipping Pi price fetch in server environment')
+        setIsLoading(false)
+        return
+      }
+
+      console.log('Fetching Pi price from API...')
+      const response = await fetch('/api/pricing/pi-price', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Add timeout to prevent hanging requests
+        signal: AbortSignal.timeout(10000) // 10 second timeout
+      })
+      
+      console.log('API response status:', response.status)
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        const errorText = await response.text()
+        console.error('API error response:', errorText)
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
       }
 
       const result = await response.json()
+      console.log('API response data:', result)
+      
       if (!result.success) {
         throw new Error(result.error || 'Failed to fetch Pi price')
       }
@@ -47,7 +69,7 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
       setSource(data.source)
       
       // Check if we're using mock/fallback data
-      const mockSources = ['mock_fallback', 'mock_simulation', 'database_fallback']
+      const mockSources = ['mock_fallback', 'mock_simulation', 'database_fallback', 'emergency_fallback']
       setIsMockData(mockSources.includes(data.source))
       
       // Show warning if using mock data
@@ -57,7 +79,8 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
 
     } catch (err) {
       console.error('Error fetching Pi price:', err)
-      setError(err instanceof Error ? err.message : 'Unknown error')
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+      setError(errorMessage)
       
       // If this is the first load and we have an error, try to use a fallback price
       if (!price) {
@@ -71,18 +94,36 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [price])
 
   const refreshPrice = useCallback(async () => {
     await fetchPrice()
   }, [fetchPrice])
 
   const convertUsdtToPi = useCallback((usdtAmount: number): number | null => {
-    if (!price || price <= 0) return null
-    return usdtAmount / price
+    // Validate inputs
+    if (typeof usdtAmount !== 'number' || isNaN(usdtAmount) || usdtAmount <= 0) {
+      console.warn('Invalid USDT amount provided to convertUsdtToPi:', usdtAmount)
+      return null
+    }
+    
+    if (!price || price <= 0) {
+      console.warn('Pi price not available for conversion')
+      return null
+    }
+    
+    const result = usdtAmount / price
+    return result
   }, [price])
 
   useEffect(() => {
+    // Only run in browser environment
+    if (typeof window === 'undefined') {
+      console.log('Skipping Pi price fetch in server environment')
+      setIsLoading(false)
+      return
+    }
+    
     // Initial fetch
     fetchPrice()
 
