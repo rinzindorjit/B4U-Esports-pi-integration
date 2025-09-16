@@ -13,11 +13,11 @@ const profileUpdateSchema = z.object({
   pubgData: z.object({
     ign: z.string().min(1),
     uid: z.string().regex(/^\d+$/, 'UID must contain only numbers')
-  }).optional(),
+  }).optional().nullable(), // Allow null values
   mlbbData: z.object({
     userId_game: z.string().regex(/^\d+$/, 'User ID must contain only numbers'),
     zoneId: z.string().regex(/^\d+$/, 'Zone ID must contain only numbers')
-  }).optional()
+  }).optional().nullable() // Allow null values
 })
 
 export async function POST(request: NextRequest) {
