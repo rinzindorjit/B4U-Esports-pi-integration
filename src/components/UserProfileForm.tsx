@@ -659,6 +659,8 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                 </label>
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={pubgData.uid}
                   onChange={(e) => setPubgData({...pubgData, uid: e.target.value.replace(/\D/g, '')})}
                   className="w-full px-3 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base touch-manipulation bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 transition-all duration-300"
@@ -686,6 +688,8 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                 </label>
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={mlbbData.userId_game}
                   onChange={(e) => setMlbbData({...mlbbData, userId_game: e.target.value.replace(/\D/g, '')})}
                   className="w-full px-3 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation bg-gradient-to-r from-pink-50 to-purple-50 hover:from-pink-100 hover:to-purple-100 transition-all duration-300"
@@ -700,6 +704,8 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                 </label>
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={mlbbData.zoneId}
                   onChange={(e) => setMlbbData({...mlbbData, zoneId: e.target.value.replace(/\D/g, '')})}
                   className="w-full px-3 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base touch-manipulation bg-gradient-to-r from-pink-50 to-purple-50 hover:from-pink-100 hover:to-purple-100 transition-all duration-300"
