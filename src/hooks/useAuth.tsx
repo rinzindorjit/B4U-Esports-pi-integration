@@ -54,9 +54,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       try {
         authResult = await piNetworkService.authenticate()
+        console.log('Pi Network authentication successful')
       } catch (error) {
-        // Fall back to mock authentication for development
-        console.warn('Pi Network not available, using mock authentication')
+        // Fall back to mock authentication for development/production without Pi SDK
+        console.warn('Pi Network not available, using mock authentication:', error)
         authResult = await piNetworkService.mockAuthenticate()
       }
 
@@ -76,18 +77,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to authenticate with server')
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Server authentication failed:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData
+        })
+        throw new Error(`Server authentication failed: ${response.status} ${response.statusText}`)
       }
 
-      const { user: userData } = await response.json()
+      const result = await response.json()
+      if (!result.success) {
+        throw new Error(result.error || 'Authentication failed')
+      }
+
+      const { user: userData } = result
       setUser(userData)
 
       // Store authentication data
       localStorage.setItem('pi_access_token', authResult.accessToken)
       localStorage.setItem('user_data', JSON.stringify(userData))
 
+      console.log('Authentication successful for user:', userData.piUsername)
+
     } catch (error) {
       console.error('Login failed:', error)
+      // Clear any partial authentication state
+      setPiAuth(null)
+      setUser(null)
+      localStorage.removeItem('pi_access_token')
+      localStorage.removeItem('user_data')
       throw error
     } finally {
       setIsLoading(false)

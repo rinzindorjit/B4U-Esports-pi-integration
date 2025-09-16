@@ -19,9 +19,20 @@ export default function PiLoginButton() {
     
     try {
       await login()
+      console.log('Login successful!')
     } catch (error) {
       console.error('Login failed:', error)
-      alert('Login failed. Please try again.')
+      
+      // Show user-friendly error message
+      const errorMessage = error instanceof Error ? error.message : 'Login failed'
+      
+      if (errorMessage.includes('Failed to authenticate with server') || errorMessage.includes('500')) {
+        alert('Login temporarily unavailable. Please try again in a few moments.')
+      } else if (errorMessage.includes('Network') || errorMessage.includes('fetch')) {
+        alert('Network connection issue. Please check your internet connection and try again.')
+      } else {
+        alert(`Login failed: ${errorMessage}. Please try again.`)
+      }
     } finally {
       setIsLoggingIn(false)
     }
