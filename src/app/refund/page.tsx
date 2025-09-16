@@ -109,8 +109,8 @@ export default function RefundPolicyPage() {
                 If you experience any delivery issues or have concerns about a transaction, please contact our support team immediately:
               </p>
               <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> info@b4uesports.com</p>
-                <p className="text-gray-700 mb-2"><strong>Phone:</strong> +97517875099</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> <a href="mailto:info@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">info@b4uesports.com</a></p>
+                <p className="text-gray-700 mb-2"><strong>Phone:</strong> <a href="tel:+97517875099" className="text-blue-600 hover:text-blue-800 underline">+97517875099</a></p>
                 <p className="text-gray-700"><strong>Subject Line:</strong> "Transaction Issue - [Your Transaction ID]"</p>
               </div>
               <p className="text-gray-700 mb-4">

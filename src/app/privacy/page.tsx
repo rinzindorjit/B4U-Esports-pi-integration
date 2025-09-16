@@ -108,8 +108,8 @@ export default function PrivacyPolicyPage() {
                 If you have questions about this Privacy Policy or our data practices, please contact us:
               </p>
               <div className="bg-gray-100 p-4 rounded-lg">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> info@b4uesports.com</p>
-                <p className="text-gray-700 mb-2"><strong>Phone:</strong> +97517875099</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> <a href="mailto:info@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">info@b4uesports.com</a></p>
+                <p className="text-gray-700 mb-2"><strong>Phone:</strong> <a href="tel:+97517875099" className="text-blue-600 hover:text-blue-800 underline">+97517875099</a></p>
                 <p className="text-gray-700"><strong>Address:</strong> B4U Esports Privacy Team</p>
               </div>
             </section>

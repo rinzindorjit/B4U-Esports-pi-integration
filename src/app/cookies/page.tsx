@@ -192,9 +192,9 @@ export default function CookiePolicyPage() {
                 If you have questions about our use of cookies, please contact us:
               </p>
               <div className="bg-gray-100 p-4 rounded-lg">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> privacy@b4uesports.com</p>
-                <p className="text-gray-700 mb-2"><strong>General Contact:</strong> info@b4uesports.com</p>
-                <p className="text-gray-700"><strong>Phone:</strong> +97517875099</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> <a href="mailto:privacy@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">privacy@b4uesports.com</a></p>
+                <p className="text-gray-700 mb-2"><strong>General Contact:</strong> <a href="mailto:info@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">info@b4uesports.com</a></p>
+                <p className="text-gray-700"><strong>Phone:</strong> <a href="tel:+97517875099" className="text-blue-600 hover:text-blue-800 underline">+97517875099</a></p>
               </div>
             </section>
           </div>

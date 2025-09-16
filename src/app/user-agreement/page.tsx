@@ -146,8 +146,8 @@ export default function UserAgreementPage() {
                 For support or to report issues:
               </p>
               <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> info@b4uesports.com</p>
-                <p className="text-gray-700 mb-2"><strong>Phone:</strong> +97517875099</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> <a href="mailto:info@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">info@b4uesports.com</a></p>
+                <p className="text-gray-700 mb-2"><strong>Phone:</strong> <a href="tel:+97517875099" className="text-blue-600 hover:text-blue-800 underline">+97517875099</a></p>
                 <p className="text-gray-700"><strong>Response Time:</strong> 24-48 hours</p>
               </div>
               <p className="text-gray-700 mb-4">

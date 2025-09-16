@@ -138,9 +138,9 @@ export default function DataProtectionPage() {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Exercising Your Rights</h2>
               <p className="text-gray-700 mb-4">To exercise your data protection rights, contact us:</p>
               <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                <p className="text-gray-700 mb-2"><strong>Data Protection Officer:</strong> privacy@b4uesports.com</p>
-                <p className="text-gray-700 mb-2"><strong>General Contact:</strong> info@b4uesports.com</p>
-                <p className="text-gray-700 mb-2"><strong>Phone:</strong> +97517875099</p>
+                <p className="text-gray-700 mb-2"><strong>Data Protection Officer:</strong> <a href="mailto:privacy@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">privacy@b4uesports.com</a></p>
+                <p className="text-gray-700 mb-2"><strong>General Contact:</strong> <a href="mailto:info@b4uesports.com" className="text-blue-600 hover:text-blue-800 underline">info@b4uesports.com</a></p>
+                <p className="text-gray-700 mb-2"><strong>Phone:</strong> <a href="tel:+97517875099" className="text-blue-600 hover:text-blue-800 underline">+97517875099</a></p>
                 <p className="text-gray-700"><strong>Response Time:</strong> 30 days maximum</p>
               </div>
             </section>

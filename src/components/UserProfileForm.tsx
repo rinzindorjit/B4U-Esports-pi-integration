@@ -18,7 +18,7 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
 
   // Form data
   const [profileData, setProfileData] = useState<UserProfileData>({
-    email: '', // Leave email blank for users to fill
+    email: user?.email || '', // Use existing email if available
     contactNumber: user?.contactNumber || '',
     country: user?.country || 'BT', // Default to Bhutan
     language: user?.language || 'en',
