@@ -30,7 +30,7 @@ export default function PackageCard({ package: pkg, onPurchase, isAuthenticated 
   const getGameLogo = (game: string) => {
     switch (game) {
       case 'PUBG_MOBILE':
-        return 'https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png'
+        return 'https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png'
       case 'MLBB':
         return 'https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png'
       default:
@@ -71,27 +71,27 @@ export default function PackageCard({ package: pkg, onPurchase, isAuthenticated 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden">
       {/* Header */}
-      <div className="p-3 sm:p-4 border-b border-gray-100">
+      <div className="p-3 sm:p-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-blue-50">
         <div className="flex items-center space-x-2 sm:space-x-3">
           {pkg.game === 'PUBG_MOBILE' ? (
             <img
               src={getGameLogo(pkg.game)}
               alt={getGameName(pkg.game)}
-              width={32}
-              height={32}
-              className="rounded-lg sm:w-10 sm:h-10 bg-transparent object-contain"
+              width={40}
+              height={40}
+              className="rounded-lg sm:w-12 sm:h-12 bg-gradient-to-r from-orange-100 to-red-100 p-1 object-contain shadow-md"
             />
           ) : (
             <Image
               src={getGameLogo(pkg.game)}
               alt={getGameName(pkg.game)}
-              width={32}
-              height={32}
-              className="rounded-lg sm:w-10 sm:h-10"
+              width={40}
+              height={40}
+              className="rounded-lg sm:w-12 sm:h-12 bg-gradient-to-r from-purple-100 to-pink-100 p-1 shadow-md"
             />
           )}
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{pkg.name}</h3>
+            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{pkg.name}</h3>
             <p className="text-xs sm:text-sm text-gray-600 truncate">{getGameName(pkg.game)}</p>
           </div>
         </div>
@@ -101,7 +101,11 @@ export default function PackageCard({ package: pkg, onPurchase, isAuthenticated 
       <div className="p-3 sm:p-4 space-y-3">
         {/* Amount */}
         <div className="text-center">
-          <div className="text-xl sm:text-2xl font-bold text-blue-600">
+          <div className={`text-xl sm:text-2xl font-bold mb-2 ${
+            pkg.game === 'PUBG_MOBILE' 
+              ? 'bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent' 
+              : 'bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent'
+          }`}>
             {pkg.amount.toLocaleString()} {getCurrency(pkg.game)}
           </div>
           {pkg.description && (
@@ -142,8 +146,8 @@ export default function PackageCard({ package: pkg, onPurchase, isAuthenticated 
             !piAmount && !priceLoading
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : pkg.game === 'PUBG_MOBILE'
-              ? 'bg-blue-600 hover:bg-blue-700 text-white active:scale-95 hover:shadow-md'
-              : 'bg-purple-600 hover:bg-purple-700 text-white active:scale-95 hover:shadow-md'
+              ? 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white active:scale-95 hover:shadow-lg transform hover:-translate-y-0.5'
+              : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white active:scale-95 hover:shadow-lg transform hover:-translate-y-0.5'
           }`}
         >
           {!isAuthenticated 

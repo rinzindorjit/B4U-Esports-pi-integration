@@ -18,7 +18,7 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
 
   // Form data
   const [profileData, setProfileData] = useState<UserProfileData>({
-    email: user?.email || '',
+    email: '', // Leave email blank for users to fill
     contactNumber: user?.contactNumber || '',
     country: user?.country || 'BT', // Default to Bhutan
     language: user?.language || 'en',
@@ -517,7 +517,7 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
             <div className="space-y-4 sm:space-y-6">
               <h3 className="font-semibold mb-3 sm:mb-4 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Choose Your Games</h3>
               <p className="text-sm text-gray-600 mb-4">
-                Select the games you play to complete your profile for those specific packages.
+                Select the games you play to complete your profile for those specific packages. You can choose one or both!
               </p>
               
               <div className="space-y-3">
@@ -530,32 +530,39 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                       setSelectedGames([...selectedGames, 'PUBG_MOBILE'])
                     }
                   }}
-                  className={`cursor-pointer border-2 rounded-xl p-4 transition-all duration-300 hover:shadow-lg ${
+                  className={`cursor-pointer border-2 rounded-xl p-4 transition-all duration-300 hover:shadow-lg transform hover:scale-105 ${
                     selectedGames.includes('PUBG_MOBILE') 
-                      ? 'border-blue-500 bg-blue-50 shadow-md' 
-                      : 'border-gray-200 hover:border-blue-300 bg-white'
+                      ? 'border-orange-500 bg-gradient-to-r from-orange-50 to-red-50 shadow-lg scale-105' 
+                      : 'border-gray-200 hover:border-orange-300 bg-white hover:shadow-md'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                       selectedGames.includes('PUBG_MOBILE') 
-                        ? 'border-blue-500 bg-blue-500' 
-                        : 'border-gray-300'
+                        ? 'border-orange-500 bg-gradient-to-r from-orange-500 to-red-500 shadow-lg' 
+                        : 'border-gray-300 hover:border-orange-400'
                     }`}>
                       {selectedGames.includes('PUBG_MOBILE') && (
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       )}
                     </div>
                     <img
-                      src="https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png"
+                      src="https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png"
                       alt="PUBG Mobile"
                       className="w-12 h-12 rounded-lg object-contain bg-transparent"
                     />
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900">PUBG Mobile</h4>
-                      <p className="text-sm text-gray-600">Purchase UC for PUBG Mobile</p>
+                      <h4 className={`font-semibold transition-colors duration-300 ${
+                        selectedGames.includes('PUBG_MOBILE') 
+                          ? 'bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent' 
+                          : 'text-gray-900'
+                      }`}>PUBG Mobile</h4>
+                      <p className="text-sm text-gray-600">Purchase UC for battle royale gaming</p>
+                      {selectedGames.includes('PUBG_MOBILE') && (
+                        <p className="text-xs text-orange-600 font-medium mt-1">✓ Selected for profile completion</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -569,20 +576,20 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                       setSelectedGames([...selectedGames, 'MLBB'])
                     }
                   }}
-                  className={`cursor-pointer border-2 rounded-xl p-4 transition-all duration-300 hover:shadow-lg ${
+                  className={`cursor-pointer border-2 rounded-xl p-4 transition-all duration-300 hover:shadow-lg transform hover:scale-105 ${
                     selectedGames.includes('MLBB') 
-                      ? 'border-purple-500 bg-purple-50 shadow-md' 
-                      : 'border-gray-200 hover:border-purple-300 bg-white'
+                      ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-lg scale-105' 
+                      : 'border-gray-200 hover:border-purple-300 bg-white hover:shadow-md'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                       selectedGames.includes('MLBB') 
-                        ? 'border-purple-500 bg-purple-500' 
-                        : 'border-gray-300'
+                        ? 'border-purple-500 bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg' 
+                        : 'border-gray-300 hover:border-purple-400'
                     }`}>
                       {selectedGames.includes('MLBB') && (
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       )}
@@ -593,15 +600,33 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                       className="w-12 h-12 rounded-lg object-cover"
                     />
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900">Mobile Legends: Bang Bang</h4>
-                      <p className="text-sm text-gray-600">Purchase Diamonds for Mobile Legends</p>
+                      <h4 className={`font-semibold transition-colors duration-300 ${
+                        selectedGames.includes('MLBB') 
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent' 
+                          : 'text-gray-900'
+                      }`}>Mobile Legends: Bang Bang</h4>
+                      <p className="text-sm text-gray-600">Purchase Diamonds for MOBA excellence</p>
+                      {selectedGames.includes('MLBB') && (
+                        <p className="text-xs text-purple-600 font-medium mt-1">✓ Selected for profile completion</p>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
               
               {selectedGames.length === 0 && (
-                <p className="text-red-500 text-sm mt-2">Please select at least one game to continue.</p>
+                <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-lg p-3 mt-4">
+                  <p className="text-red-600 text-sm text-center font-medium">🎮 Please select at least one game to continue your gaming journey!</p>
+                </div>
+              )}
+              
+              {selectedGames.length > 0 && (
+                <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-3 mt-4">
+                  <p className="text-green-700 text-sm text-center font-medium">
+                    🎉 Great! You've selected {selectedGames.length} game{selectedGames.length > 1 ? 's' : ''}. 
+                    {selectedGames.length === 1 ? 'Ready to proceed!' : 'You\'ll complete profiles for both games.'}
+                  </p>
+                </div>
               )}
             </div>
           )}

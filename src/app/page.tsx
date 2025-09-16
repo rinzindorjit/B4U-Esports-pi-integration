@@ -70,10 +70,10 @@ export default function Home() {
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3">
               <span className="text-white text-xs sm:text-sm hidden sm:inline group relative">
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold hover:from-pink-400 hover:via-purple-400 hover:to-indigo-400 transition-all duration-500">
-                  Welcome, {user?.piUsername}!
+                <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-bold text-base hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-500 animate-pulse">
+                  🎉 Welcome, {user?.piUsername}!
                 </span>
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 group-hover:w-full transition-all duration-500 animate-pulse"></span>
               </span>
               {/* Admin Panel Link */}
               {(user?.piWalletAddress === 'GBP7PG27L3U4IQWFQGXNCHCGPJH3GVV72EEO4Q7RHFASMVR4TIA6J5F2' || user?.email === 'admin@b4uesports.com') && (

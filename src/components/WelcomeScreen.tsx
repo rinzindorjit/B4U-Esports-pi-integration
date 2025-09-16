@@ -131,7 +131,7 @@ export default function WelcomeScreen() {
               <div className="group bg-white/5 backdrop-blur-xl rounded-xl p-4 border border-white/10 hover:bg-white/15 hover:border-white/30 transition-all duration-300 transform hover:scale-110 hover:-translate-y-3 hover:rotate-1">
                 <div className="w-16 h-16 mx-auto mb-3 rounded-xl overflow-hidden group-hover:scale-110 transition-transform duration-300">
                   <img
-                    src="https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png"
+                    src="https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png"
                     alt="PUBG Mobile"
                     width={64}
                     height={64}

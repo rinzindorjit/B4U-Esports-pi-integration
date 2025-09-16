@@ -237,9 +237,20 @@ export default function UserDashboard() {
                   </div>
                   <div>
                     <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2">
-                      {getTimeBasedGreeting()}, <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{user.piUsername}</span>!
+                      <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
+                        {getTimeBasedGreeting()}
+                      </span>
+                      , <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-500">
+                        {user.piUsername}
+                      </span>
+                      <span className="text-yellow-400 animate-bounce inline-block ml-2">!</span>
                     </h2>
-                    <p className="text-gray-300 text-base sm:text-lg">Ready to power up your gaming experience?</p>
+                    <p className="text-gray-300 text-base sm:text-lg">
+                      <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent font-semibold">
+                        Ready to power up your gaming experience?
+                      </span>
+                      <span className="ml-2 text-yellow-400 animate-pulse">✨</span>
+                    </p>
                   </div>
                 </div>
                 
@@ -339,7 +350,7 @@ export default function UserDashboard() {
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg">
                     <img
-                      src="https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png"
+                      src="https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png"
                       alt="PUBG Mobile"
                       className="w-12 h-12 rounded-xl object-contain"
                     />

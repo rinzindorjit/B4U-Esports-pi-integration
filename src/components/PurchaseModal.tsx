@@ -128,7 +128,7 @@ In production, this would process ${piAmount.toFixed(4)} Pi for ${pkg.amount.toL
   const getGameLogo = (game: GameType) => {
     switch (game) {
       case 'PUBG_MOBILE':
-        return 'https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png'
+        return 'https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png'
       case 'MLBB':
         return 'https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png'
       default:
