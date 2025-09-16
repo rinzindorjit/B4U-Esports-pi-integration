@@ -605,7 +605,7 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
                           ? 'bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent' 
                           : 'text-gray-900'
                       }`}>Mobile Legends: Bang Bang</h4>
-                      <p className="text-sm text-gray-600">Purchase Diamonds for MOBA excellence</p>
+                      <p className="text-sm text-gray-600">Purchase Diamonds for MLBB excellence</p>
                       {selectedGames.includes('MLBB') && (
                         <p className="text-xs text-purple-600 font-medium mt-1">✓ Selected for profile completion</p>
                       )}

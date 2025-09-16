@@ -237,48 +237,48 @@ export default function UserDashboard() {
                   </div>
                   <div>
                     <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2">
-                      <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
+                      <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse hover:animate-bounce">
                         {getTimeBasedGreeting()}
                       </span>
-                      , <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-500">
+                      , <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-orange-400 hover:to-red-400 transition-all duration-500 hover:scale-110 inline-block hover:rotate-3">
                         {user.piUsername}
                       </span>
-                      <span className="text-yellow-400 animate-bounce inline-block ml-2">!</span>
+                      <span className="text-yellow-400 animate-bounce inline-block ml-2 hover:scale-125 hover:rotate-12 transition-all duration-300">✨</span>
                     </h2>
-                    <p className="text-gray-300 text-base sm:text-lg">
-                      <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent font-semibold">
+                    <p className="text-gray-300 text-base sm:text-lg hover:text-gray-100 transition-colors duration-300">
+                      <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent font-semibold hover:from-cyan-400 hover:to-emerald-400 transition-all duration-500">
                         Ready to power up your gaming experience?
                       </span>
-                      <span className="ml-2 text-yellow-400 animate-pulse">✨</span>
+                      <span className="ml-2 text-yellow-400 animate-pulse hover:animate-spin">✨</span>
                     </p>
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div className="bg-black/30 rounded-xl p-4 border border-white/10">
+                  <div className="bg-black/30 rounded-xl p-4 border border-white/10 hover:bg-black/20 hover:border-yellow-400/50 transition-all duration-300 hover:scale-105 group">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                        <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center group-hover:bg-yellow-500/40 group-hover:rotate-6 transition-all duration-300">
+                        <svg className="w-5 h-5 text-yellow-400 group-hover:scale-125 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                       <div>
-                        <p className="text-gray-400 text-sm">Wallet Address</p>
-                        <p className="text-white font-semibold">{truncateAddress(user.piWalletAddress)}</p>
+                        <p className="text-gray-400 text-sm group-hover:text-yellow-300 transition-colors duration-300">Wallet Address</p>
+                        <p className="text-white font-semibold group-hover:text-yellow-100 transition-colors duration-300">{truncateAddress(user.piWalletAddress)}</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-black/30 rounded-xl p-4 border border-white/10">
+                  <div className="bg-black/30 rounded-xl p-4 border border-white/10 hover:bg-black/20 hover:border-green-400/50 transition-all duration-300 hover:scale-105 group">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                        <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center group-hover:bg-green-500/40 group-hover:rotate-6 transition-all duration-300">
+                        <svg className="w-5 h-5 text-green-400 group-hover:scale-125 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" />
                         </svg>
                       </div>
                       <div>
-                        <p className="text-gray-400 text-sm">Pi Network Price</p>
-                        <p className="text-green-400 font-semibold">${piPrice?.toFixed(4) || 'Loading...'}</p>
+                        <p className="text-gray-400 text-sm group-hover:text-green-300 transition-colors duration-300">Pi Network Price</p>
+                        <p className="text-green-400 font-semibold group-hover:text-green-300 transition-colors duration-300">${piPrice?.toFixed(4) || 'Loading...'}</p>
                       </div>
                     </div>
                   </div>
@@ -336,10 +336,12 @@ export default function UserDashboard() {
         {/* Featured Products Showcase */}
         <div className="mb-8 sm:mb-12">
           <div className="text-center mb-8">
-            <h3 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-              Featured Gaming Products
+            <h3 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 hover:from-pink-400 hover:to-yellow-400 transition-all duration-500 hover:scale-110">
+              🎮 Featured Gaming Products 🎮
             </h3>
-            <p className="text-gray-300 text-lg">Power up your gameplay with instant top-ups</p>
+            <p className="text-gray-300 text-lg hover:text-gray-100 transition-colors duration-300 hover:scale-105">
+              🚀 Power up your gameplay with instant top-ups! ⚡
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
@@ -382,10 +384,10 @@ export default function UserDashboard() {
                 </div>
                 
                 <button
-                  onClick={() => setSelectedGame('PUBG_MOBILE')}
-                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-6 rounded-xl transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+                  onClick={() => window.location.href = '/?game=PUBG_MOBILE'}
+                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-6 rounded-xl transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-105 hover:shadow-orange-500/50"
                 >
-                  View All PUBG Packages
+                  🎮 View All PUBG Packages
                 </button>
               </div>
             </div>
@@ -406,7 +408,7 @@ export default function UserDashboard() {
                   </div>
                   <div>
                     <h4 className="text-xl sm:text-2xl font-bold text-white">Mobile Legends</h4>
-                    <p className="text-gray-300">Diamonds for MOBA legends</p>
+                    <p className="text-gray-300">Diamonds for MLBB legends</p>
                   </div>
                 </div>
                 
@@ -431,10 +433,10 @@ export default function UserDashboard() {
                 </div>
                 
                 <button
-                  onClick={() => setSelectedGame('MLBB')}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 px-6 rounded-xl transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+                  onClick={() => window.location.href = '/?game=MLBB'}
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 px-6 rounded-xl transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-105 hover:shadow-purple-500/50"
                 >
-                  View All MLBB Packages
+                  💎 View All MLBB Packages
                 </button>
               </div>
             </div>
@@ -442,21 +444,21 @@ export default function UserDashboard() {
 
           {/* Quick Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white mb-1">24/7</div>
-              <div className="text-gray-300 text-sm">Instant Delivery</div>
+            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-gradient-to-r hover:from-blue-500/40 hover:to-purple-500/40 hover:border-blue-400/50 hover:scale-110 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+              <div className="text-2xl font-bold text-white mb-1 group-hover:text-blue-300 group-hover:animate-pulse">🕒 24/7</div>
+              <div className="text-gray-300 text-sm group-hover:text-blue-200">Instant Delivery</div>
             </div>
-            <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white mb-1">100%</div>
-              <div className="text-gray-300 text-sm">Secure Payments</div>
+            <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-gradient-to-r hover:from-green-500/40 hover:to-blue-500/40 hover:border-green-400/50 hover:scale-110 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+              <div className="text-2xl font-bold text-white mb-1 group-hover:text-green-300 group-hover:animate-bounce">🔒 100%</div>
+              <div className="text-gray-300 text-sm group-hover:text-green-200">Secure Payments</div>
             </div>
-            <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white mb-1">1M+</div>
-              <div className="text-gray-300 text-sm">Happy Gamers</div>
+            <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-gradient-to-r hover:from-purple-500/40 hover:to-pink-500/40 hover:border-purple-400/50 hover:scale-110 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+              <div className="text-2xl font-bold text-white mb-1 group-hover:text-purple-300 group-hover:animate-spin">🎆 1M+</div>
+              <div className="text-gray-300 text-sm group-hover:text-purple-200">Happy Gamers</div>
             </div>
-            <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white mb-1">5★</div>
-              <div className="text-gray-300 text-sm">Customer Rating</div>
+            <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-gradient-to-r hover:from-yellow-500/40 hover:to-orange-500/40 hover:border-yellow-400/50 hover:scale-110 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+              <div className="text-2xl font-bold text-white mb-1 group-hover:text-yellow-300 group-hover:animate-pulse">⭐ 5★</div>
+              <div className="text-gray-300 text-sm group-hover:text-yellow-200">Customer Rating</div>
             </div>
           </div>
         </div>
@@ -504,10 +506,10 @@ export default function UserDashboard() {
                 Your purchase history will appear here once you make your first transaction.
               </p>
               <button
-                onClick={() => setShowAllProducts(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-3 px-6 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                onClick={() => window.location.href = '/'}
+                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-3 px-6 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105 hover:shadow-blue-500/50 group"
               >
-                Make Your First Purchase
+                <span className="group-hover:animate-pulse">🛒 Make Your First Purchase</span>
               </button>
             </div>
           ) : (
