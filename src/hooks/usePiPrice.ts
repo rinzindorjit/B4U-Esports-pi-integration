@@ -13,6 +13,7 @@ interface UsePiPriceReturn {
   error: string | null
   lastUpdated: string | null
   source: string | null
+  isMockData: boolean
   refreshPrice: () => Promise<void>
   convertUsdtToPi: (usdtAmount: number) => number | null
 }
@@ -23,6 +24,7 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
   const [source, setSource] = useState<string | null>(null)
+  const [isMockData, setIsMockData] = useState(false)
 
   const fetchPrice = useCallback(async () => {
     try {
@@ -43,10 +45,29 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
       setPrice(data.priceUsd)
       setLastUpdated(data.timestamp)
       setSource(data.source)
+      
+      // Check if we're using mock/fallback data
+      const mockSources = ['mock_fallback', 'mock_simulation', 'database_fallback']
+      setIsMockData(mockSources.includes(data.source))
+      
+      // Show warning if using mock data
+      if (result.warning) {
+        console.warn('Pi Price Warning:', result.warning)
+      }
 
     } catch (err) {
       console.error('Error fetching Pi price:', err)
       setError(err instanceof Error ? err.message : 'Unknown error')
+      
+      // If this is the first load and we have an error, try to use a fallback price
+      if (!price) {
+        console.log('Setting emergency fallback price')
+        const emergencyPrice = 1.47 // Emergency fallback price
+        setPrice(emergencyPrice)
+        setLastUpdated(new Date().toISOString())
+        setSource('emergency_fallback')
+        setIsMockData(true)
+      }
     } finally {
       setIsLoading(false)
     }
@@ -78,6 +99,7 @@ export function usePiPrice(autoRefreshInterval: number = 60000): UsePiPriceRetur
     error,
     lastUpdated,
     source,
+    isMockData,
     refreshPrice,
     convertUsdtToPi
   }

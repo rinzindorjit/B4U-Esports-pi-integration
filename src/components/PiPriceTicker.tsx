@@ -8,7 +8,7 @@ interface PiPriceTickerProps {
 }
 
 export default function PiPriceTicker({ className = '', showDetails = false }: PiPriceTickerProps) {
-  const { price, isLoading, error, lastUpdated, source, refreshPrice } = usePiPrice(60000) // Refresh every 60 seconds
+  const { price, isLoading, error, lastUpdated, source, isMockData, refreshPrice } = usePiPrice(60000) // Refresh every 60 seconds
 
   const formatPrice = (price: number | null): string => {
     if (price === null) return '...'
@@ -46,9 +46,14 @@ export default function PiPriceTicker({ className = '', showDetails = false }: P
       />
       <div className="flex items-center space-x-1">
         <span className="font-semibold text-yellow-500 text-sm sm:text-base">Pi:</span>
-        <span className={`font-mono text-sm sm:text-base ${isLoading ? 'animate-pulse' : ''}`}>
+        <span className={`font-mono text-sm sm:text-base ${isLoading ? 'animate-pulse' : ''} ${isMockData ? 'text-orange-300' : ''}`}>
           {formatPrice(price)}
         </span>
+        {isMockData && (
+          <span className="text-xs text-orange-400 ml-1" title="Simulated price - live data unavailable">
+            *
+          </span>
+        )}
         {isLoading && (
           <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-500 rounded-full animate-ping"></div>
         )}
@@ -57,8 +62,15 @@ export default function PiPriceTicker({ className = '', showDetails = false }: P
       {showDetails && lastUpdated && (
         <div className="text-xs text-gray-500 hidden sm:block">
           <span>Updated: {formatTime(lastUpdated)}</span>
-          {source && source !== 'coingecko' && (
-            <span className="ml-1 text-orange-500">({source})</span>
+          {source && (
+            <span className={`ml-1 ${isMockData ? 'text-orange-400' : source !== 'coingecko' ? 'text-yellow-500' : 'text-green-500'}`}>
+              ({source === 'mock_simulation' ? 'simulated' : source})
+            </span>
+          )}
+          {isMockData && (
+            <span className="ml-1 text-orange-400 text-xs" title="Live Pi price unavailable, using simulation">
+              📡
+            </span>
           )}
         </div>
       )}
