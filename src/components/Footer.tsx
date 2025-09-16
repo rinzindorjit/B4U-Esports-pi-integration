@@ -54,8 +54,22 @@ export default function Footer() {
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold mb-2 text-yellow-400">Contact</h4>
-                <p className="text-gray-300 text-sm">📧 info@b4uesports.com</p>
-                <p className="text-gray-300 text-sm">📱 +97517875099</p>
+                <p className="text-gray-300 text-sm">
+                  📧 <a 
+                    href="mailto:info@b4uesports.com" 
+                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline"
+                  >
+                    info@b4uesports.com
+                  </a>
+                </p>
+                <p className="text-gray-300 text-sm">
+                  📱 <a 
+                    href="tel:+97517875099" 
+                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline"
+                  >
+                    +97517875099
+                  </a>
+                </p>
               </div>
               
               <div>

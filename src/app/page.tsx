@@ -48,14 +48,16 @@ export default function Home() {
       <header className="container mx-auto px-4 py-4 sm:py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 sm:space-x-4">
-            <Image
-              src="https://b4uesports.com/wp-content/uploads/2025/04/cropped-Black_and_Blue_Simple_Creative_Illustrative_Dragons_E-Sport_Logo_20240720_103229_0000-removebg-preview.png"
-              alt="B4U Esports Logo"
-              width={50}
-              height={50}
-              className="rounded-lg sm:w-[60px] sm:h-[60px]"
-            />
-            <h1 className="text-xl sm:text-2xl font-bold text-white">B4U Esports</h1>
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+              <Image
+                src="https://b4uesports.com/wp-content/uploads/2025/04/cropped-Black_and_Blue_Simple_Creative_Illustrative_Dragons_E-Sport_Logo_20240720_103229_0000-removebg-preview.png"
+                alt="Gaming Hub Logo"
+                width={50}
+                height={50}
+                className="relative rounded-xl sm:w-[60px] sm:h-[60px] hover:scale-110 transition-transform duration-300 cursor-pointer"
+              />
+            </div>
           </div>
           
           {/* User Menu for Authenticated Users */}
@@ -67,7 +69,12 @@ export default function Home() {
               <PiPriceTicker showDetails={false} className="text-white" />
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <span className="text-white text-xs sm:text-sm hidden sm:inline">Welcome, {user?.piUsername}</span>
+              <span className="text-white text-xs sm:text-sm hidden sm:inline group relative">
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold hover:from-pink-400 hover:via-purple-400 hover:to-indigo-400 transition-all duration-500">
+                  Welcome, {user?.piUsername}!
+                </span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
+              </span>
               {/* Admin Panel Link */}
               {(user?.piWalletAddress === 'GBP7PG27L3U4IQWFQGXNCHCGPJH3GVV72EEO4Q7RHFASMVR4TIA6J5F2' || user?.email === 'admin@b4uesports.com') && (
                 <Link
