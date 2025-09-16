@@ -31,8 +31,12 @@ function getMockPriceData() {
 
 export async function GET(request: NextRequest) {
   try {
+    console.log('Pi price request received')
+    console.log('Environment check - CoinGecko API Key:', process.env.COINGECKO_API_KEY ? 'Available' : 'Missing')
+    
     // Check cache first
     if (priceCache && (Date.now() - priceCache.timestamp) < PI_PRICE_CACHE_DURATION) {
+      console.log('Returning cached price:', priceCache.price)
       return NextResponse.json({
         success: true,
         data: {
@@ -43,27 +47,42 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Fetch fresh price from CoinGecko
-    const response = await fetch(
-      `${COINGECKO_API_URL}?ids=pi-network&vs_currencies=usd&x_cg_demo_api_key=${process.env.COINGECKO_API_KEY}`,
-      {
-        headers: {
-          'Accept': 'application/json',
-          'User-Agent': 'B4U-Esports-App/1.0'
-        }
-      }
-    )
+    // Check if API key is available
+    if (!process.env.COINGECKO_API_KEY) {
+      console.log('CoinGecko API key not found, using mock data')
+      throw new Error('CoinGecko API key not configured')
+    }
 
+    // Fetch fresh price from CoinGecko
+    const apiUrl = `${COINGECKO_API_URL}?ids=pi-network&vs_currencies=usd&x_cg_demo_api_key=${process.env.COINGECKO_API_KEY}`
+    console.log('Fetching from CoinGecko API...')
+    
+    const response = await fetch(apiUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'B4U-Esports-App/1.0'
+      }
+    })
+
+    console.log('CoinGecko API response status:', response.status)
+    
     if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`)
+      const errorText = await response.text()
+      console.error('CoinGecko API error response:', errorText)
+      throw new Error(`CoinGecko API error: ${response.status} - ${errorText}`)
     }
 
     const data = await response.json()
+    console.log('CoinGecko API response data:', data)
+    
     const piPrice = data['pi-network']?.usd
 
     if (!piPrice || typeof piPrice !== 'number') {
+      console.error('Invalid price data from CoinGecko:', data)
       throw new Error('Invalid price data received from CoinGecko')
     }
+
+    console.log('Successfully fetched Pi price from CoinGecko:', piPrice)
 
     // Update cache
     priceCache = {

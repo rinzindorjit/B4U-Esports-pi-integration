@@ -4,17 +4,6 @@
     "NODE_ENV": "production",
     "NEXT_PUBLIC_BASE_URL": "https://b4uesports.vercel.app"
   },
-  "functions": {
-    "src/app/api/**/*.ts": {
-      "maxDuration": 30
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
