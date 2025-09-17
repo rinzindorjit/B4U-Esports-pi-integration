@@ -3,14 +3,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Footer() {
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:info@b4uesports.com'
-  }
-
-  const handlePhoneClick = () => {
-    window.location.href = 'tel:+97517875099'
-  }
-
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,6 +103,31 @@ export default function Footer() {
                   <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Terms of using our platform</span>
                 </Link>
               </li>
+              {/* Contact Information - placed after main links */}
+              <li className="pt-2 border-t border-gray-700 mt-2">
+                <a 
+                  href="mailto:info@b4uesports.com" 
+                  className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline flex items-start group"
+                >
+                  <span className="mr-2 mt-1">📧</span>
+                  <span>
+                    info@b4uesports.com
+                    <span className="block text-gray-400 text-xs mt-1 group-hover:text-gray-300">For general inquiries and support</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="tel:+97517875099" 
+                  className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline flex items-start group"
+                >
+                  <span className="mr-2 mt-1">📱</span>
+                  <span>
+                    +97517875099
+                    <span className="block text-gray-400 text-xs mt-1 group-hover:text-gray-300">For urgent support and business inquiries</span>
+                  </span>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -118,32 +135,6 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">Support Us</h3>
             <div className="space-y-4">
-              <div>
-                <h4 className="font-semibold mb-2 text-yellow-400 flex items-center">
-                  <span className="mr-2">📞</span>Contact Information
-                </h4>
-                <p className="text-gray-300 text-sm mb-2 flex items-start">
-                  <span className="mr-2 mt-1">📧</span>
-                  <button 
-                    onClick={handleEmailClick}
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer text-left"
-                  >
-                    info@b4uesports.com
-                    <span className="block text-gray-400 text-xs mt-1">For general inquiries and support</span>
-                  </button>
-                </p>
-                <p className="text-gray-300 text-sm flex items-start">
-                  <span className="mr-2 mt-1">📱</span>
-                  <button 
-                    onClick={handlePhoneClick}
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer text-left"
-                  >
-                    +97517875099
-                    <span className="block text-gray-400 text-xs mt-1">For urgent support and business inquiries</span>
-                  </button>
-                </p>
-              </div>
-              
               <div>
                 <h4 className="font-semibold mb-3 text-yellow-400 flex items-center">
                   <span className="mr-2">🌐</span>Follow Our Social Media
