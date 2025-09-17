@@ -176,7 +176,7 @@ Please try again.`)
   const getGameLogo = (game: GameType) => {
     switch (game) {
       case 'PUBG_MOBILE':
-        return 'https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png'
+        return 'https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png'
       case 'MLBB':
         return 'https://sm.ign.com/ign_za/cover/m/mobile-leg/mobile-legends-bang-bang_c6z8.jpg'
       default:

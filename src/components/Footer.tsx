@@ -69,6 +69,20 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/about-us" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">ℹ️</span>
+                  <span className="group-hover:underline">About Us</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Learn about our company</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/our-history" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">📜</span>
+                  <span className="group-hover:underline">Our History</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Our journey and milestones</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
                   <span className="mr-2 text-lg">🔒</span>
                   <span className="group-hover:underline">Privacy Policy</span>

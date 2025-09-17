@@ -161,8 +161,14 @@ export default function WelcomeScreen() {
           {/* Pi Network Login Section */}
           <div className="group bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-8 sm:p-12 border border-white/20 hover:border-white/40 max-w-2xl mx-auto transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
             <div className="mb-6">
-              <div className="w-20 h-20 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-2xl group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                <span className="text-2xl font-bold text-white group-hover:scale-125 transition-transform duration-300">π</span>
+              <div className="w-20 h-20 mx-auto mb-4 shadow-lg group-hover:shadow-2xl group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 rounded-full overflow-hidden">
+                <Image
+                  src="https://b4uesports.com/wp-content/uploads/2025/04/PI.jpg"
+                  alt="Pi Network"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain group-hover:scale-125 transition-transform duration-300"
+                />
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:via-orange-400 group-hover:to-red-400 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-500">
                 Connect with Pi Network

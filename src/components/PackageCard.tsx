@@ -30,7 +30,7 @@ export default function PackageCard({ package: pkg, onPurchase, isAuthenticated 
   const getGameLogo = (game: string) => {
     switch (game) {
       case 'PUBG_MOBILE':
-        return 'https://cdn.midasbuy.com/images/apps/pubgm/1599546030876PIvqwGaa.png'
+        return 'https://cdn.midasbuy.com/images/pubgm_app-icon_512x512%281%29.e9f7efc0.png'
       case 'MLBB':
         return 'https://b4uesports.com/wp-content/uploads/2025/04/1000077486.png'
       default:
