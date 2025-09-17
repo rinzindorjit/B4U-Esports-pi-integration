@@ -88,10 +88,12 @@ export default function UserDashboard() {
           usdtAmount: 0.99,
           piPriceSnapshot: 0.66,
           gameUserId: '123456789',
-          gameZoneId: null,
+          gameZoneId: undefined,
           status: 'COMPLETED',
+          piTransactionId: 'tx_123456789',
           createdAt: new Date(Date.now() - 86400000),
           updatedAt: new Date(Date.now() - 86400000),
+          completedAt: new Date(Date.now() - 86300000),
           package: {
             id: '1',
             name: '60 UC',
@@ -102,6 +104,18 @@ export default function UserDashboard() {
             isActive: true,
             createdAt: new Date(),
             updatedAt: new Date()
+          },
+          user: {
+            id: user?.id || '1',
+            piUserId: user?.piUserId || 'test_user_id',
+            piUsername: user?.piUsername || 'testuser',
+            piWalletAddress: user?.piWalletAddress || 'test_wallet_address',
+            email: user?.email || 'test@example.com',
+            language: user?.language || 'en',
+            isActive: user?.isActive || true,
+            isVerified: user?.isVerified || true,
+            createdAt: user?.createdAt || new Date(),
+            updatedAt: user?.updatedAt || new Date()
           }
         },
         {
@@ -114,6 +128,7 @@ export default function UserDashboard() {
           gameUserId: '987654321',
           gameZoneId: '12345',
           status: 'PROCESSING',
+          piTransactionId: 'tx_987654321',
           createdAt: new Date(Date.now() - 172800000),
           updatedAt: new Date(Date.now() - 172800000),
           package: {
@@ -126,6 +141,18 @@ export default function UserDashboard() {
             isActive: true,
             createdAt: new Date(),
             updatedAt: new Date()
+          },
+          user: {
+            id: user?.id || '1',
+            piUserId: user?.piUserId || 'test_user_id',
+            piUsername: user?.piUsername || 'testuser',
+            piWalletAddress: user?.piWalletAddress || 'test_wallet_address',
+            email: user?.email || 'test@example.com',
+            language: user?.language || 'en',
+            isActive: user?.isActive || true,
+            isVerified: user?.isVerified || true,
+            createdAt: user?.createdAt || new Date(),
+            updatedAt: user?.updatedAt || new Date()
           }
         }
       ]

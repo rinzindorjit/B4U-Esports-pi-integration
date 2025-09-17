@@ -95,3 +95,4 @@ dist
 tmp/
 temp/
 .vercel
+.env*.local
