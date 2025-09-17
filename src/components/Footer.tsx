@@ -28,21 +28,39 @@ export default function Footer() {
               B4U Esports
             </h3>
             <div className="mb-6">
-              <h4 className="text-lg font-semibold mb-3 text-yellow-400">About Us</h4>
+              <h4 className="text-lg font-semibold mb-3 text-yellow-400 flex items-center">
+                <span className="mr-2">ℹ️</span>About Us
+              </h4>
               <p className="text-gray-300 leading-relaxed mb-4">
                 B4U Esports is a pioneering gaming marketplace that bridges the gap between traditional gaming 
                 and blockchain technology. Founded with the vision of making gaming currencies more accessible, 
                 we specialize in providing secure, instant, and affordable in-game currency purchases for 
                 popular mobile games like PUBG Mobile and Mobile Legends: Bang Bang.
               </p>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Our platform offers gamers a seamless experience to enhance their gameplay with top-ups, 
+                tournament entries, and social media boosting services. We're committed to providing the best 
+                value and service to our community of players worldwide.
+              </p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-3 text-yellow-400">Our History</h4>
+              <h4 className="text-lg font-semibold mb-3 text-yellow-400 flex items-center">
+                <span className="mr-2">📜</span>Our History
+              </h4>
+              <p className="text-gray-300 leading-relaxed mb-3">
+                Established in 2024, B4U Esports began as a small team of passionate gamers who recognized 
+                the need for a more accessible and secure way to purchase in-game currencies. Our journey 
+                started with PUBG Mobile and quickly expanded to include other popular titles.
+              </p>
+              <p className="text-gray-300 leading-relaxed mb-3">
+                In 2025, we integrated Pi Network's revolutionary payment system, becoming one of the first 
+                gaming platforms to accept Pi cryptocurrency. This integration has allowed us to serve a 
+                global community of gamers while providing secure, low-cost transactions.
+              </p>
               <p className="text-gray-300 leading-relaxed">
-                Since our establishment, we've been at the forefront of integrating Pi Network's revolutionary 
-                payment system with gaming. Our platform represents the future of gaming transactions, offering 
-                players a seamless way to purchase UC and Diamonds using Pi cryptocurrency. We're committed to 
-                building a trusted community where gamers can enhance their gaming experience with complete confidence.
+                Today, we continue to innovate and expand our services, with plans to support more games, 
+                tournaments, and gaming services. Our mission remains the same: to empower gamers with the 
+                tools and currencies they need to succeed in their favorite games.
               </p>
             </div>
           </div>
@@ -50,35 +68,47 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               <li>
-                <Link href="/dashboard" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
-                  <span className="mr-2">🎮</span> Dashboard
+                <Link href="/dashboard" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">🎮</span>
+                  <span className="group-hover:underline">Dashboard</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Access your gaming dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
-                  <span className="mr-2">🔒</span> Privacy Policy
+                <Link href="/privacy" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">🔒</span>
+                  <span className="group-hover:underline">Privacy Policy</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">How we protect your data</span>
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
-                  <span className="mr-2">📜</span> Terms of Service
+                <Link href="/terms" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">📜</span>
+                  <span className="group-hover:underline">Terms of Service</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Our service agreements</span>
                 </Link>
               </li>
               <li>
-                <Link href="/refund" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
-                  <span className="mr-2">💰</span> Refund Policy
+                <Link href="/refund" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">💰</span>
+                  <span className="group-hover:underline">Refund Policy</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Refund terms and conditions</span>
                 </Link>
               </li>
               <li>
-                <Link href="/data-protection" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
-                  <span className="mr-2">🛡️</span> Data Protection
+                <Link href="/data-protection" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">🛡️</span>
+                  <span className="group-hover:underline">Data Protection</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Your data security measures</span>
                 </Link>
               </li>
               <li>
-                <Link href="/user-agreement" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
-                  <span className="mr-2">📝</span> User Agreement
+                <Link href="/user-agreement" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 text-lg">📝</span>
+                  <span className="group-hover:underline">User Agreement</span>
+                  <span className="ml-2 text-xs text-gray-500 group-hover:text-yellow-500">Terms of using our platform</span>
                 </Link>
               </li>
             </ul>
@@ -89,33 +119,44 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Support Us</h3>
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold mb-2 text-yellow-400">Contact</h4>
-                <p className="text-gray-300 text-sm mb-2">
-                  📧 <button 
+                <h4 className="font-semibold mb-2 text-yellow-400 flex items-center">
+                  <span className="mr-2">📞</span>Contact Information
+                </h4>
+                <p className="text-gray-300 text-sm mb-2 flex items-start">
+                  <span className="mr-2 mt-1">📧</span>
+                  <button 
                     onClick={handleEmailClick}
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer"
+                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer text-left"
                   >
                     info@b4uesports.com
+                    <span className="block text-gray-400 text-xs mt-1">For general inquiries and support</span>
                   </button>
                 </p>
-                <p className="text-gray-300 text-sm">
-                  📱 <button 
+                <p className="text-gray-300 text-sm flex items-start">
+                  <span className="mr-2 mt-1">📱</span>
+                  <button 
                     onClick={handlePhoneClick}
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer"
+                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer text-left"
                   >
                     +97517875099
+                    <span className="block text-gray-400 text-xs mt-1">For urgent support and business inquiries</span>
                   </button>
                 </p>
               </div>
               
               <div>
-                <h4 className="font-semibold mb-3 text-yellow-400">Follow Us</h4>
+                <h4 className="font-semibold mb-3 text-yellow-400 flex items-center">
+                  <span className="mr-2">🌐</span>Follow Our Social Media
+                </h4>
+                <p className="text-gray-300 text-sm mb-3">
+                  Stay updated with the latest news, tournaments, and special offers
+                </p>
                 <div className="flex justify-center md:justify-start space-x-4">
                   <a 
                     href="https://facebook.com/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-blue-500 transition-colors duration-300 transform hover:scale-110"
+                    className="text-gray-300 hover:text-blue-500 transition-colors duration-300 transform hover:scale-110 bg-gray-800 p-2 rounded-full"
                     aria-label="Facebook"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -126,7 +167,7 @@ export default function Footer() {
                     href="https://twitter.com/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-blue-400 transition-colors duration-300 transform hover:scale-110"
+                    className="text-gray-300 hover:text-blue-400 transition-colors duration-300 transform hover:scale-110 bg-gray-800 p-2 rounded-full"
                     aria-label="Twitter"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -137,7 +178,7 @@ export default function Footer() {
                     href="https://instagram.com/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-pink-500 transition-colors duration-300 transform hover:scale-110"
+                    className="text-gray-300 hover:text-pink-500 transition-colors duration-300 transform hover:scale-110 bg-gray-800 p-2 rounded-full"
                     aria-label="Instagram"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -148,7 +189,7 @@ export default function Footer() {
                     href="https://youtube.com/@b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-red-500 transition-colors duration-300 transform hover:scale-110"
+                    className="text-gray-300 hover:text-red-500 transition-colors duration-300 transform hover:scale-110 bg-gray-800 p-2 rounded-full"
                     aria-label="YouTube"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -159,11 +200,11 @@ export default function Footer() {
                     href="https://discord.gg/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-purple-500 transition-colors duration-300 transform hover:scale-110"
+                    className="text-gray-300 hover:text-purple-500 transition-colors duration-300 transform hover:scale-110 bg-gray-800 p-2 rounded-full"
                     aria-label="Discord"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0190 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1568 2.4189Z"/>
+                      <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.077.077 0 01-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0190 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1568 2.4189Z"/>
                     </svg>
                   </a>
                 </div>
