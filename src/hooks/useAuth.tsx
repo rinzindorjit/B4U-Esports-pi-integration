@@ -34,6 +34,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const parsedUser = JSON.parse(userData)
         setUser(parsedUser)
         setPiAuth({ accessToken: token, user: { uid: parsedUser.piUserId, username: parsedUser.piUsername } })
+        
+        // Fetch updated user profile from static API
+        try {
+          const response = await fetch('/api/user/profile-static')
+          if (response.ok) {
+            const result = await response.json()
+            if (result.success && result.user) {
+              setUser(result.user)
+              localStorage.setItem('user_data', JSON.stringify(result.user))
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching updated profile:', error)
+        }
       }
     } catch (error) {
       console.error('Error checking existing auth:', error)

@@ -40,8 +40,8 @@ export default function PackagesGrid({ gameType, gameFilter, onPurchase }: Packa
 
       const filterGame = gameFilter || gameType
       const url = filterGame 
-        ? `/api/packages?game=${filterGame}`
-        : '/api/packages'
+        ? `/api/packages-static?game=${filterGame}`
+        : '/api/packages-static'
       
       const response = await fetch(url)
       

@@ -132,7 +132,7 @@ export default function UserProfileForm({ isOpen, onClose, onComplete }: UserPro
 
     setIsLoading(true)
     try {
-      const response = await fetch('/api/user/profile', {
+      const response = await fetch('/api/user/profile-static', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
