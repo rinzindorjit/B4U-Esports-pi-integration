@@ -11,6 +11,7 @@ interface AuthContextType {
   login: () => Promise<void>
   logout: () => void
   updateProfile: (data: Partial<UserWithProfiles>) => void
+  refreshUserData: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -37,14 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         // Fetch updated user profile from static API
         try {
-          const response = await fetch('/api/user/profile-static')
-          if (response.ok) {
-            const result = await response.json()
-            if (result.success && result.user) {
-              setUser(result.user)
-              localStorage.setItem('user_data', JSON.stringify(result.user))
-            }
-          }
+          await refreshUserData()
         } catch (error) {
           console.error('Error fetching updated profile:', error)
         }
@@ -56,6 +50,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem('user_data')
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const refreshUserData = async () => {
+    try {
+      const response = await fetch('/api/user/profile-static')
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success && result.user) {
+          setUser(result.user)
+          localStorage.setItem('user_data', JSON.stringify(result.user))
+        }
+      }
+    } catch (error) {
+      console.error('Error refreshing user data:', error)
     }
   }
 
@@ -132,6 +141,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setPiAuth(null)
     localStorage.removeItem('pi_access_token')
     localStorage.removeItem('user_data')
+    // Redirect to home page
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
+    }
   }
 
   const updateProfile = (data: Partial<UserWithProfiles>) => {
@@ -149,7 +162,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated: !!user && !!piAuth,
     login,
     logout,
-    updateProfile
+    updateProfile,
+    refreshUserData
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

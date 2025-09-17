@@ -87,12 +87,17 @@ export default function PurchaseModal({ isOpen, package: pkg, onClose, onPurchas
           gameType: pkg.game,
           // Additional metadata for Pi Network processing
           timestamp: Date.now(),
-          platform: 'B4U-Esports'
+          platform: 'B4U-Esports',
+          // Pi Network required metadata for backend processing
+          backendUrl: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
+          apiVersion: 'v1',
+          environment: process.env.NEXT_PUBLIC_PI_ENVIRONMENT || 'development'
         }
       }
 
       // Initiate Pi payment
       try {
+        console.log('Initiating Pi payment with data:', paymentData)
         const paymentId = await piNetworkService.createPayment(paymentData)
         console.log('Pi payment initiated:', paymentId)
         
@@ -126,6 +131,30 @@ In production, this would process ${piAmount.toFixed(4)} Pi for ${pkg.amount.toL
           alert(`Payment failed: ${errorMessage}
 
 Please try again or contact support if the issue persists.`)
+          
+          // Also log the error to our backend for debugging
+          try {
+            await fetch('/api/logs', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'payment_error',
+                error: errorMessage,
+                paymentData: {
+                  ...paymentData,
+                  // Don't send sensitive data
+                  metadata: {
+                    transactionId: paymentData.metadata.transactionId,
+                    userId: paymentData.metadata.userId,
+                    packageId: paymentData.metadata.packageId
+                  }
+                }
+              })
+            })
+          } catch (logError) {
+            console.error('Failed to log payment error:', logError)
+          }
+          
           throw piError
         }
       }

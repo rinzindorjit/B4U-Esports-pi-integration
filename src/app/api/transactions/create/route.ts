@@ -37,14 +37,28 @@ export async function POST(request: NextRequest) {
     // Calculate Pi amount
     const piAmount = packageData.usdtPrice / currentPiPrice
 
-    // For now, get user by the first available user (in production, use authentication)
     // TODO: In production, use authenticated user from Pi Network token
+    // For now, get user by the first available user (in development)
     const user = await prisma.user.findFirst({
       include: {
         pubgProfile: true,
         mlbbProfile: true
       }
     })
+
+    // In production, you would extract the user from the Pi Network authentication token:
+    /*
+    const authToken = request.headers.get('authorization')
+    if (!authToken) {
+      return NextResponse.json({
+        success: false,
+        error: 'Authentication required'
+      }, { status: 401 })
+    }
+    
+    // Verify the token with Pi Network and extract user info
+    const user = await getUserFromPiToken(authToken)
+    */
 
     if (!user) {
       return NextResponse.json({

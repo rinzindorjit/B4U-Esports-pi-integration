@@ -3,7 +3,8 @@
   "env": {
     "NODE_ENV": "production",
     "NEXT_PUBLIC_BASE_URL": "https://b4uesports.vercel.app",
-    "NEXT_PUBLIC_PI_ENVIRONMENT": "production"
+    "NEXT_PUBLIC_PI_ENVIRONMENT": "production",
+    "PI_API_KEY": "@pi_api_key"
   },
   "headers": [
     {

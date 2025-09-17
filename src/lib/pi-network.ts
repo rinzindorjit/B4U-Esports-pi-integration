@@ -47,7 +47,7 @@ class PiNetworkService {
   }
 
   // Backend URL for Pi Network callbacks
-  private backendUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://b4uesports.vercel.app'
+  private backendUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
   async initialize(): Promise<void> {
     if (this.isInitialized) return
@@ -108,6 +108,7 @@ class PiNetworkService {
     }
 
     try {
+      console.log('Attempting Pi Network authentication with scopes: username, payments')
       // Request authentication with required scopes
       const auth = await window.Pi.authenticate(
         ['username', 'payments'], 
@@ -117,9 +118,22 @@ class PiNetworkService {
         }
       )
 
+      console.log('Pi Network authentication successful:', auth)
       return auth
     } catch (error) {
-      console.error('Pi authentication failed, falling back to mock:', error)
+      console.error('Pi authentication failed:', error)
+      
+      // More specific error handling
+      if (error instanceof Error) {
+        if (error.message.includes('cancelled')) {
+          throw new Error('Authentication was cancelled by user')
+        } else if (error.message.includes('network')) {
+          throw new Error('Network error during authentication. Please check your connection.')
+        } else {
+          throw new Error(`Authentication failed: ${error.message}`)
+        }
+      }
+      
       return this.mockAuthenticate()
     }
   }
@@ -164,9 +178,12 @@ class PiNetworkService {
           version: '1.0.0',
           // Pi Network required metadata for backend processing
           backendUrl: this.backendUrl,
-          apiVersion: 'v1'
+          apiVersion: 'v1',
+          environment: process.env.NEXT_PUBLIC_PI_ENVIRONMENT || 'development'
         }
       }
+
+      console.log('Creating Pi payment with metadata:', enhancedPaymentData)
 
       window.Pi.createPayment(enhancedPaymentData, callbacks)
     })
@@ -174,6 +191,7 @@ class PiNetworkService {
 
   private async handleServerApproval(paymentId: string): Promise<void> {
     try {
+      console.log('Sending payment approval request for:', paymentId)
       const response = await fetch('/api/pi/approve-payment', {
         method: 'POST',
         headers: {
@@ -183,8 +201,13 @@ class PiNetworkService {
       })
 
       if (!response.ok) {
-        throw new Error('Server approval failed')
+        const errorText = await response.text()
+        console.error('Server approval failed:', response.status, errorText)
+        throw new Error(`Server approval failed: ${response.status} - ${errorText}`)
       }
+      
+      const result = await response.json()
+      console.log('Server approval successful:', result)
     } catch (error) {
       console.error('Server approval error:', error)
     }
@@ -192,6 +215,7 @@ class PiNetworkService {
 
   private async handleServerCompletion(paymentId: string, txid: string): Promise<void> {
     try {
+      console.log('Sending payment completion request for:', paymentId, txid)
       const response = await fetch('/api/pi/complete-payment', {
         method: 'POST',
         headers: {
@@ -201,8 +225,13 @@ class PiNetworkService {
       })
 
       if (!response.ok) {
-        throw new Error('Server completion failed')
+        const errorText = await response.text()
+        console.error('Server completion failed:', response.status, errorText)
+        throw new Error(`Server completion failed: ${response.status} - ${errorText}`)
       }
+      
+      const result = await response.json()
+      console.log('Server completion successful:', result)
     } catch (error) {
       console.error('Server completion error:', error)
     }

@@ -3,6 +3,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Footer() {
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:info@b4uesports.com'
+  }
+
+  const handlePhoneClick = () => {
+    window.location.href = 'tel:+97517875099'
+  }
+
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,32 +27,60 @@ export default function Footer() {
               />
               B4U Esports
             </h3>
-            <h4 className="text-lg font-semibold mb-3 text-yellow-400">About Us</h4>
-            <p className="text-gray-300 leading-relaxed mb-4">
-              B4U Esports is a pioneering gaming marketplace that bridges the gap between traditional gaming 
-              and blockchain technology. Founded with the vision of making gaming currencies more accessible, 
-              we specialize in providing secure, instant, and affordable in-game currency purchases for 
-              popular mobile games like PUBG Mobile and Mobile Legends: Bang Bang.
-            </p>
-            <h4 className="text-lg font-semibold mb-3 text-yellow-400">Our History</h4>
-            <p className="text-gray-300 leading-relaxed">
-              Since our establishment, we've been at the forefront of integrating Pi Network's revolutionary 
-              payment system with gaming. Our platform represents the future of gaming transactions, offering 
-              players a seamless way to purchase UC and Diamonds using Pi cryptocurrency. We're committed to 
-              building a trusted community where gamers can enhance their gaming experience with complete confidence.
-            </p>
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3 text-yellow-400">About Us</h4>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                B4U Esports is a pioneering gaming marketplace that bridges the gap between traditional gaming 
+                and blockchain technology. Founded with the vision of making gaming currencies more accessible, 
+                we specialize in providing secure, instant, and affordable in-game currency purchases for 
+                popular mobile games like PUBG Mobile and Mobile Legends: Bang Bang.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-3 text-yellow-400">Our History</h4>
+              <p className="text-gray-300 leading-relaxed">
+                Since our establishment, we've been at the forefront of integrating Pi Network's revolutionary 
+                payment system with gaming. Our platform represents the future of gaming transactions, offering 
+                players a seamless way to purchase UC and Diamonds using Pi cryptocurrency. We're committed to 
+                building a trusted community where gamers can enhance their gaming experience with complete confidence.
+              </p>
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link href="/dashboard" className="text-gray-300 hover:text-yellow-400 transition-colors">Dashboard</Link></li>
-              <li><Link href="/privacy" className="text-gray-300 hover:text-yellow-400 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="text-gray-300 hover:text-yellow-400 transition-colors">Terms of Service</Link></li>
-              <li><Link href="/refund" className="text-gray-300 hover:text-yellow-400 transition-colors">Refund Policy</Link></li>
-              <li><Link href="/data-protection" className="text-gray-300 hover:text-yellow-400 transition-colors">Data Protection</Link></li>
-              <li><Link href="/user-agreement" className="text-gray-300 hover:text-yellow-400 transition-colors">User Agreement</Link></li>
+              <li>
+                <Link href="/dashboard" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                  <span className="mr-2">🎮</span> Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                  <span className="mr-2">🔒</span> Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                  <span className="mr-2">📜</span> Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/refund" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                  <span className="mr-2">💰</span> Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/data-protection" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                  <span className="mr-2">🛡️</span> Data Protection
+                </Link>
+              </li>
+              <li>
+                <Link href="/user-agreement" className="text-gray-300 hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                  <span className="mr-2">📝</span> User Agreement
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -54,21 +90,21 @@ export default function Footer() {
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold mb-2 text-yellow-400">Contact</h4>
-                <p className="text-gray-300 text-sm">
-                  📧 <a 
-                    href="mailto:info@b4uesports.com" 
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline"
+                <p className="text-gray-300 text-sm mb-2">
+                  📧 <button 
+                    onClick={handleEmailClick}
+                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer"
                   >
                     info@b4uesports.com
-                  </a>
+                  </button>
                 </p>
                 <p className="text-gray-300 text-sm">
-                  📱 <a 
-                    href="tel:+97517875099" 
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline"
+                  📱 <button 
+                    onClick={handlePhoneClick}
+                    className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300 underline hover:no-underline cursor-pointer"
                   >
                     +97517875099
-                  </a>
+                  </button>
                 </p>
               </div>
               
@@ -79,7 +115,7 @@ export default function Footer() {
                     href="https://facebook.com/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-blue-500 transition-colors"
+                    className="text-gray-300 hover:text-blue-500 transition-colors duration-300 transform hover:scale-110"
                     aria-label="Facebook"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -90,7 +126,7 @@ export default function Footer() {
                     href="https://twitter.com/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-blue-400 transition-colors"
+                    className="text-gray-300 hover:text-blue-400 transition-colors duration-300 transform hover:scale-110"
                     aria-label="Twitter"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -101,7 +137,7 @@ export default function Footer() {
                     href="https://instagram.com/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-pink-500 transition-colors"
+                    className="text-gray-300 hover:text-pink-500 transition-colors duration-300 transform hover:scale-110"
                     aria-label="Instagram"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -112,18 +148,18 @@ export default function Footer() {
                     href="https://youtube.com/@b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-red-500 transition-colors"
+                    className="text-gray-300 hover:text-red-500 transition-colors duration-300 transform hover:scale-110"
                     aria-label="YouTube"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                   </a>
                   <a 
                     href="https://discord.gg/b4uesports" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-purple-500 transition-colors"
+                    className="text-gray-300 hover:text-purple-500 transition-colors duration-300 transform hover:scale-110"
                     aria-label="Discord"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
