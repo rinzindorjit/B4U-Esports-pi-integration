@@ -73,7 +73,7 @@ export default function PurchaseModal({ isOpen, package: pkg, onClose, onPurchas
 
       const { transaction } = await response.json()
 
-      // Prepare Pi payment data
+      // Prepare Pi payment data with enhanced metadata
       const paymentData = {
         amount: piAmount,
         memo: `${pkg.name} - ${getCurrency(pkg.game)} for ${getGameName(pkg.game)}`,
@@ -84,7 +84,10 @@ export default function PurchaseModal({ isOpen, package: pkg, onClose, onPurchas
           gameUserId: transaction.gameUserId,
           gameZoneId: transaction.gameZoneId,
           packageName: pkg.name,
-          gameType: pkg.game
+          gameType: pkg.game,
+          // Additional metadata for Pi Network processing
+          timestamp: Date.now(),
+          platform: 'B4U-Esports'
         }
       }
 
@@ -102,16 +105,29 @@ Pi Payment ID: ${paymentId}
 Your ${pkg.amount.toLocaleString()} ${getCurrency(pkg.game)} will be delivered once the payment is completed.`)
         
       } catch (piError) {
-        // Fall back to mock payment for development
-        console.warn('Pi Network payment failed, using mock payment:', piError)
-        const mockPaymentId = await piNetworkService.mockCreatePayment(paymentData)
+        console.error('Pi Network payment failed:', piError)
         
-        alert(`Mock payment initiated for development!
+        // Show detailed error message to user
+        const errorMessage = piError instanceof Error ? piError.message : 'Unknown error occurred'
+        
+        // Fall back to mock payment for development
+        if (process.env.NODE_ENV === 'development' || window.location.hostname.includes('localhost')) {
+          console.warn('Using mock payment for development:', piError)
+          const mockPaymentId = await piNetworkService.mockCreatePayment(paymentData)
+          
+          alert(`Mock payment initiated for development!
 
 Transaction ID: ${transaction.id}
 Mock Payment ID: ${mockPaymentId}
 
 In production, this would process ${piAmount.toFixed(4)} Pi for ${pkg.amount.toLocaleString()} ${getCurrency(pkg.game)}.`)
+        } else {
+          // Show error to user in production
+          alert(`Payment failed: ${errorMessage}
+
+Please try again or contact support if the issue persists.`)
+          throw piError
+        }
       }
       
       onPurchaseComplete()
@@ -119,7 +135,10 @@ In production, this would process ${piAmount.toFixed(4)} Pi for ${pkg.amount.toL
 
     } catch (error) {
       console.error('Purchase failed:', error)
-      alert('Purchase failed. Please try again.')
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+      alert(`Purchase failed: ${errorMessage}
+
+Please try again.`)
     } finally {
       setIsProcessing(false)
     }

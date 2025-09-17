@@ -43,8 +43,11 @@ class PiNetworkService {
   private isInitialized = false
   private config: PiConfig = {
     version: "2.0",
-    sandbox: true // Use testnet for development
+    sandbox: process.env.NEXT_PUBLIC_PI_ENVIRONMENT === 'sandbox' // Use testnet for development
   }
+
+  // Backend URL for Pi Network callbacks
+  private backendUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://b4uesports.vercel.app'
 
   async initialize(): Promise<void> {
     if (this.isInitialized) return
@@ -151,14 +154,17 @@ class PiNetworkService {
         }
       }
 
-      // Add additional metadata for better tracking
+      // Add additional metadata for better tracking and Pi Network compatibility
       const enhancedPaymentData = {
         ...paymentData,
         metadata: {
           ...paymentData.metadata,
           timestamp: Date.now(),
           platform: 'B4U-Esports',
-          version: '1.0.0'
+          version: '1.0.0',
+          // Pi Network required metadata for backend processing
+          backendUrl: this.backendUrl,
+          apiVersion: 'v1'
         }
       }
 
@@ -190,7 +196,7 @@ class PiNetworkService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },
+      },
         body: JSON.stringify({ paymentId, txid })
       })
 

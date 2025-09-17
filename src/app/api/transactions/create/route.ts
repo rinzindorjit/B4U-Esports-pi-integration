@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
     const piAmount = packageData.usdtPrice / currentPiPrice
 
     // For now, get user by the first available user (in production, use authentication)
+    // TODO: In production, use authenticated user from Pi Network token
     const user = await prisma.user.findFirst({
       include: {
         pubgProfile: true,
