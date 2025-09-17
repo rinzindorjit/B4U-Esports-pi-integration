@@ -20,13 +20,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserWithProfiles | null>(null)
   const [piAuth, setPiAuth] = useState<PiAuthResult | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
     // Check for existing authentication on mount
     checkExistingAuth()
   }, [])
 
   const checkExistingAuth = async () => {
+    // Only run on client-side
+    if (typeof window === 'undefined') {
+      setIsLoading(false)
+      return
+    }
+    
     try {
       const token = localStorage.getItem('pi_access_token')
       const userData = localStorage.getItem('user_data')
@@ -34,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (token && userData) {
         const parsedUser = JSON.parse(userData)
         setUser(parsedUser)
-        setPiAuth({ accessToken: token, user: { uid: parsedUser.piUserId, username: parsedUser.piUsername } })
+        setPiAuth({ accessToken: token, user: { uid: parsedUser.piUserId, username: parsedUser.piUsername, walletAddress: parsedUser.piWalletAddress } })
         
         // Fetch updated user profile from static API
         try {
@@ -54,6 +62,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const refreshUserData = async () => {
+    // Only run on client-side
+    if (typeof window === 'undefined') return
+    
     try {
       const response = await fetch('/api/user/profile-static')
       if (response.ok) {
@@ -69,6 +80,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const login = async () => {
+    // Only run on client-side
+    if (typeof window === 'undefined') return
+    
     try {
       setIsLoading(true)
       
@@ -79,9 +93,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         authResult = await piNetworkService.authenticate()
         console.log('Pi Network authentication successful')
       } catch (error) {
-        // Fall back to mock authentication for development/production without Pi SDK
-        console.warn('Pi Network not available, using mock authentication:', error)
-        authResult = await piNetworkService.mockAuthenticate()
+        // Handle specific authentication errors
+        console.error('Pi Network authentication error:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Unknown authentication error'
+        
+        // Show user-friendly error message
+        if (errorMessage.includes('cancelled')) {
+          throw new Error('Authentication was cancelled. Please try again and complete the authentication process.')
+        } else if (errorMessage.includes('Network') || errorMessage.includes('network')) {
+          throw new Error('Network connection issue. Please check your internet connection and try again.')
+        } else {
+          // Fall back to mock authentication for development/production without Pi SDK
+          console.warn('Pi Network not available, using mock authentication:', error)
+          authResult = await piNetworkService.mockAuthenticate()
+        }
       }
 
       setPiAuth(authResult)
@@ -95,6 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify({
           piUserId: authResult.user.uid,
           piUsername: authResult.user.username,
+          piWalletAddress: authResult.user.walletAddress, // Include wallet address
           accessToken: authResult.accessToken
         })
       })
@@ -130,6 +156,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null)
       localStorage.removeItem('pi_access_token')
       localStorage.removeItem('user_data')
+      
+      // Re-throw error for UI to handle
       throw error
     } finally {
       setIsLoading(false)
@@ -139,10 +167,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setUser(null)
     setPiAuth(null)
-    localStorage.removeItem('pi_access_token')
-    localStorage.removeItem('user_data')
-    // Redirect to home page
+    // Only run on client-side
     if (typeof window !== 'undefined') {
+      localStorage.removeItem('pi_access_token')
+      localStorage.removeItem('user_data')
+      // Redirect to home page
       window.location.href = '/'
     }
   }
@@ -151,7 +180,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (user) {
       const updatedUser = { ...user, ...data }
       setUser(updatedUser)
-      localStorage.setItem('user_data', JSON.stringify(updatedUser))
+      // Only run on client-side
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user_data', JSON.stringify(updatedUser))
+      }
     }
   }
 
@@ -164,6 +196,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     updateProfile,
     refreshUserData
+  }
+
+  // Don't render children until we know if we're on the client
+  if (!isClient) {
+    return <div style={{ visibility: 'hidden' }}>{children}</div>
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

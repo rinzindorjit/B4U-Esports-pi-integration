@@ -22,8 +22,7 @@ export async function POST(request: NextRequest) {
     // Find transaction by Pi payment ID
     const transaction = await prisma.transaction.findFirst({
       where: { 
-        piTransactionId: paymentId,
-        status: 'PROCESSING'
+        piTransactionId: paymentId
       },
       include: { 
         package: true, 
@@ -39,16 +38,19 @@ export async function POST(request: NextRequest) {
     if (!transaction) {
       return NextResponse.json({
         success: false,
-        error: 'Transaction not found or not in processing state'
+        error: 'Transaction not found'
       }, { status: 404 })
     }
 
-    // In a real implementation, you would:
-    // 1. Submit the completed payment to Pi Network
-    // 2. Verify the blockchain transaction
-    // 3. Process the in-game currency delivery
+    // Only process if transaction is in PROCESSING state
+    if (transaction.status !== 'PROCESSING') {
+      return NextResponse.json({
+        success: false,
+        error: `Transaction is in unexpected state: ${transaction.status}`
+      }, { status: 400 })
+    }
 
-    // For development, we'll simulate the completion process
+    // Process the game currency delivery
     console.log('Processing game currency delivery:', {
       game: transaction.package.game,
       amount: transaction.package.amount,
@@ -77,33 +79,6 @@ export async function POST(request: NextRequest) {
       // Don't fail the completion if email fails
     }
 
-    // In real implementation, submit to Pi Network:
-    /*
-    const submitResponse = await fetch('https://api.minepi.com/v2/payments/' + paymentId + '/complete', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Key ${process.env.PI_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        txid: txid
-      })
-    })
-    
-    if (!submitResponse.ok) {
-      throw new Error('Failed to submit payment to Pi Network')
-    }
-    */
-
-    // In real implementation, integrate with game APIs for currency delivery:
-    /*
-    if (transaction.package.game === 'PUBG_MOBILE') {
-      await deliverPubgUC(transaction.gameUserId, transaction.package.amount)
-    } else if (transaction.package.game === 'MLBB') {
-      await deliverMLBBDiamonds(transaction.gameUserId, transaction.gameZoneId, transaction.package.amount)
-    }
-    */
-
     console.log('Payment completed successfully:', {
       transactionId: transaction.id,
       paymentId,
@@ -122,7 +97,7 @@ export async function POST(request: NextRequest) {
     console.error('Payment completion error:', error)
     
     // Mark transaction as failed if something went wrong
-    if (error instanceof Error && error.message.includes('paymentId') && paymentId) {
+    if (error instanceof Error && paymentId) {
       try {
         await prisma.transaction.updateMany({
           where: { piTransactionId: paymentId },

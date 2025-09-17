@@ -10,12 +10,12 @@ export interface User {
   id: string
   piUserId: string
   piUsername: string
-  piWalletAddress: string
-  email: string
-  contactNumber?: string
-  country?: string
-  language: string
-  referralCode?: string
+  piWalletAddress: string | null
+  email: string | null
+  contactNumber: string | null
+  country: string | null
+  language: string | null
+  referralCode: string | null
   isActive: boolean
   isVerified: boolean
   createdAt: Date

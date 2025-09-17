@@ -28,8 +28,11 @@ export default function PiLoginButton() {
       
       if (errorMessage.includes('Failed to authenticate with server') || errorMessage.includes('500')) {
         alert('Login temporarily unavailable. Please try again in a few moments.')
-      } else if (errorMessage.includes('Network') || errorMessage.includes('fetch')) {
+      } else if (errorMessage.includes('Network') || errorMessage.includes('network') || errorMessage.includes('connection')) {
         alert('Network connection issue. Please check your internet connection and try again.')
+      } else if (errorMessage.includes('cancelled')) {
+        // Don't show alert for cancelled authentication, user intentionally cancelled
+        console.log('User cancelled authentication')
       } else {
         alert(`Login failed: ${errorMessage}. Please try again.`)
       }

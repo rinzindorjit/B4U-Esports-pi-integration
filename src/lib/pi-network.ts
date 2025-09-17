@@ -21,6 +21,7 @@ interface PiAuthResult {
   user: {
     uid: string
     username: string
+    walletAddress: string  // Add wallet address to the user object
   }
 }
 
@@ -87,12 +88,58 @@ class PiNetworkService {
   }
 
   async authenticate(): Promise<PiAuthResult> {
-    // In production/Vercel environment, use mock authentication
+    // In production/Vercel environment, try real authentication first
     if (typeof window === 'undefined' || !window.location.hostname.includes('localhost')) {
-      console.log('Production environment detected, using mock authentication')
+      console.log('Production environment detected, attempting real Pi authentication')
+      
+      // Try to initialize if not already done
+      if (!this.isInitialized) {
+        try {
+          await this.initialize()
+        } catch (error) {
+          console.warn('Pi SDK initialization failed:', error)
+          // Fall back to mock auth only if initialization fails
+          return this.mockAuthenticate()
+        }
+      }
+      
+      // Try real authentication
+      if (window.Pi) {
+        try {
+          console.log('Attempting Pi Network authentication with scopes: username, payments, wallet')
+          // Request authentication with required scopes including wallet
+          const auth = await window.Pi.authenticate(
+            ['username', 'payments', 'wallet'], 
+            function onIncompletePaymentFound(payment: any) {
+              console.log('Incomplete payment found:', payment)
+              // Handle incomplete payments here
+            }
+          )
+          
+          console.log('Pi Network authentication successful:', auth)
+          return auth
+        } catch (error) {
+          console.error('Pi authentication failed:', error)
+          
+          // More specific error handling
+          if (error instanceof Error) {
+            if (error.message.includes('cancelled')) {
+              throw new Error('Authentication was cancelled by user')
+            } else if (error.message.includes('network')) {
+              throw new Error('Network error during authentication. Please check your connection.')
+            } else {
+              throw new Error(`Authentication failed: ${error.message}`)
+            }
+          }
+        }
+      }
+      
+      // If we reach here, fall back to mock authentication
+      console.warn('Pi Network not available, using mock authentication')
       return this.mockAuthenticate()
     }
 
+    // Development environment - original logic
     if (!this.isInitialized) {
       try {
         await this.initialize()
@@ -108,10 +155,10 @@ class PiNetworkService {
     }
 
     try {
-      console.log('Attempting Pi Network authentication with scopes: username, payments')
-      // Request authentication with required scopes
+      console.log('Attempting Pi Network authentication with scopes: username, payments, wallet')
+      // Request authentication with required scopes including wallet
       const auth = await window.Pi.authenticate(
-        ['username', 'payments'], 
+        ['username', 'payments', 'wallet'], 
         function onIncompletePaymentFound(payment: any) {
           console.log('Incomplete payment found:', payment)
           // Handle incomplete payments here
@@ -244,7 +291,8 @@ class PiNetworkService {
     // Generate a consistent mock user instead of random ones
     const mockUser = { 
       uid: 'mock_user_12345', 
-      username: 'demo_user' 
+      username: 'demo_user',
+      walletAddress: 'GCKMTHK8Y2RVNU5ZP3JKNP7R5R333M7N3R4N3R4N3R4N3R4N3R4N3R4N3R4N3R4'  // Mock wallet address
     }
     
     return {

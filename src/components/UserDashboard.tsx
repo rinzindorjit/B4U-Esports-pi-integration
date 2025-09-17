@@ -111,7 +111,10 @@ export default function UserDashboard() {
             piUsername: user?.piUsername || 'testuser',
             piWalletAddress: user?.piWalletAddress || 'test_wallet_address',
             email: user?.email || 'test@example.com',
+            contactNumber: user?.contactNumber || null,
+            country: user?.country || null,
             language: user?.language || 'en',
+            referralCode: user?.referralCode || null,
             isActive: user?.isActive || true,
             isVerified: user?.isVerified || true,
             createdAt: user?.createdAt || new Date(),
@@ -148,7 +151,10 @@ export default function UserDashboard() {
             piUsername: user?.piUsername || 'testuser',
             piWalletAddress: user?.piWalletAddress || 'test_wallet_address',
             email: user?.email || 'test@example.com',
+            contactNumber: user?.contactNumber || null,
+            country: user?.country || null,
             language: user?.language || 'en',
+            referralCode: user?.referralCode || null,
             isActive: user?.isActive || true,
             isVerified: user?.isVerified || true,
             createdAt: user?.createdAt || new Date(),
@@ -191,7 +197,7 @@ export default function UserDashboard() {
     }
   }
 
-  const truncateAddress = (address: string) => {
+  const truncateAddress = (address: string | null) => {
     if (!address) return 'Not available'
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }

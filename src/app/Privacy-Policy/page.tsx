@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 
-export default function UserAgreementPage() {
+export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -24,7 +24,7 @@ export default function UserAgreementPage() {
             </Link>
             <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4">
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                User Agreement
+                Privacy Policy
               </span>
             </h1>
           </div>
@@ -33,51 +33,35 @@ export default function UserAgreementPage() {
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/20 mb-12">
             <div className="prose prose-invert max-w-none">
               <p className="text-gray-300 mb-6">
-                This User Agreement governs your use of the B4U Esports gaming marketplace platform.
+                This Privacy Policy describes how B4U Esports collects, uses, and protects your personal information when you use our services.
               </p>
               
-              <h2 className="text-2xl font-bold text-white mb-4">1. Agreement Overview</h2>
-              <p className="text-gray-300 mb-6">
-                By creating an account or using our services, you agree to be bound by this Agreement and our Terms of Service.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">2. Pi Network Integration Consent</h2>
-              <p className="text-gray-300 mb-6">
-                By using B4U Esports, you explicitly consent to connecting your Pi Network account for authentication and payments.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">3. Gaming Account Requirements</h2>
-              <p className="text-gray-300 mb-6">
-                You agree to provide accurate gaming account information and warrant that you own or have authorized access 
-                to the gaming accounts you specify.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">4. Purchase Agreement</h2>
-              <p className="text-gray-300 mb-6">
-                You acknowledge that all digital currency purchases are final and non-refundable. Prices are displayed in 
-                both USDT and Pi cryptocurrency, with Pi amounts calculated using real-time exchange rates.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">5. Testnet Operations Agreement</h2>
-              <div className="bg-blue-500/20 border border-blue-500/50 rounded-xl p-4 mb-6">
-                <p className="text-blue-200">
-                  <strong>Current Status:</strong> B4U Esports operates on Pi Network's testnet for secure testing and development.
-                  No real Pi coins from your mainnet wallet will be deducted during testing.
-                </p>
-              </div>
-
-              <h2 className="text-2xl font-bold text-white mb-4">6. User Conduct Agreement</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">Information We Collect</h2>
               <ul className="text-gray-300 mb-6 space-y-2">
-                <li>Use the platform only for legitimate gaming currency purchases</li>
-                <li>Provide accurate and truthful information</li>
-                <li>Respect intellectual property rights</li>
-                <li>Comply with all applicable laws and regulations</li>
+                <li>Pi Network username and wallet address</li>
+                <li>Email address</li>
+                <li>Contact information</li>
+                <li>Gaming account information (PUBG UID, MLBB User ID/Zone ID)</li>
+                <li>Transaction history</li>
               </ul>
 
-              <h2 className="text-2xl font-bold text-white mb-4">7. Risk Acknowledgment</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">How We Use Your Information</h2>
+              <ul className="text-gray-300 mb-6 space-y-2">
+                <li>To process your transactions</li>
+                <li>To deliver in-game currencies to your accounts</li>
+                <li>To communicate with you about your account and services</li>
+                <li>To improve our platform and user experience</li>
+                <li>To comply with legal obligations</li>
+              </ul>
+
+              <h2 className="text-2xl font-bold text-white mb-4">Data Protection</h2>
               <p className="text-gray-300 mb-6">
-                You acknowledge and accept risks including cryptocurrency value fluctuations, technical issues, and changes 
-                to game publisher terms or Pi Network operations.
+                We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.
+              </p>
+
+              <h2 className="text-2xl font-bold text-white mb-4">Your Rights</h2>
+              <p className="text-gray-300 mb-6">
+                You have the right to access, update, or delete your personal information. Contact us if you wish to exercise these rights.
               </p>
             </div>
           </div>

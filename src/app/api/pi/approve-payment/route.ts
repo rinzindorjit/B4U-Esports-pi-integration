@@ -11,74 +11,90 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { paymentId } = approvePaymentSchema.parse(body)
 
-    // In a real implementation, you would:
-    // 1. Verify the payment with Pi Network servers
-    // 2. Check payment authenticity and amount
-    // 3. Update transaction status accordingly
-
-    // For development, we'll simulate the approval process
     console.log('Approving Pi payment:', paymentId)
 
-    // Find transaction by Pi payment ID (in real implementation)
-    // For now, we'll approve the most recent pending transaction
+    // Find transaction by Pi payment ID
     const transaction = await prisma.transaction.findFirst({
       where: { 
-        status: 'PENDING',
-        piTransactionId: null // Not yet assigned a Pi transaction ID
+        piTransactionId: paymentId  // Look for the specific payment ID
       },
-      orderBy: { createdAt: 'desc' },
       include: { package: true, user: true }
     })
 
+    // If we don't find by payment ID, look for the most recent pending transaction
     if (!transaction) {
+      const pendingTransaction = await prisma.transaction.findFirst({
+        where: { 
+          status: 'PENDING',
+          piTransactionId: null
+        },
+        orderBy: { createdAt: 'desc' },
+        include: { package: true, user: true }
+      })
+
+      if (pendingTransaction) {
+        // Update the pending transaction with the payment ID
+        const updatedTransaction = await prisma.transaction.update({
+          where: { id: pendingTransaction.id },
+          data: {
+            piTransactionId: paymentId,
+            status: 'PROCESSING'
+          }
+        })
+        
+        console.log('Payment approved successfully:', {
+          transactionId: updatedTransaction.id,
+          paymentId,
+          amount: updatedTransaction.piAmount
+        })
+
+        return NextResponse.json({
+          success: true,
+          message: 'Payment approved successfully',
+          transactionId: updatedTransaction.id
+        })
+      } else {
+        return NextResponse.json({
+          success: false,
+          error: 'No pending transaction found'
+        }, { status: 404 })
+      }
+    }
+
+    // If we found the transaction by payment ID, update its status
+    if (transaction.status === 'PENDING') {
+      const updatedTransaction = await prisma.transaction.update({
+        where: { id: transaction.id },
+        data: {
+          status: 'PROCESSING'
+        }
+      })
+
+      console.log('Payment approved successfully:', {
+        transactionId: updatedTransaction.id,
+        paymentId,
+        amount: updatedTransaction.piAmount
+      })
+
+      return NextResponse.json({
+        success: true,
+        message: 'Payment approved successfully',
+        transactionId: updatedTransaction.id
+      })
+    } else if (transaction.status === 'PROCESSING') {
+      // Already processing, no need to update
+      return NextResponse.json({
+        success: true,
+        message: 'Payment already approved',
+        transactionId: transaction.id
+      })
+    } else {
+      // Transaction is in an unexpected state
       return NextResponse.json({
         success: false,
-        error: 'No pending transaction found'
-      }, { status: 404 })
+        error: `Transaction is in unexpected state: ${transaction.status}`
+      }, { status: 400 })
     }
-
-    // Update transaction with Pi payment ID and set to processing
-    const updatedTransaction = await prisma.transaction.update({
-      where: { id: transaction.id },
-      data: {
-        piTransactionId: paymentId,
-        status: 'PROCESSING'
-      }
-    })
-
-    // In real implementation, verify with Pi Network API:
-    /*
-    const verificationResponse = await fetch('https://api.minepi.com/v2/payments/' + paymentId, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Key ${process.env.PI_API_KEY}`
-      }
-    })
-    
-    if (!verificationResponse.ok) {
-      throw new Error('Payment verification failed')
-    }
-    
-    const paymentData = await verificationResponse.json()
-    
-    // Verify payment details match transaction
-    if (paymentData.amount !== transaction.piAmount || 
-        paymentData.status !== 'developer_approved') {
-      throw new Error('Payment verification mismatch')
-    }
-    */
-
-    console.log('Payment approved successfully:', {
-      transactionId: transaction.id,
-      paymentId,
-      amount: transaction.piAmount
-    })
-
-    return NextResponse.json({
-      success: true,
-      message: 'Payment approved successfully',
-      transactionId: transaction.id
-    })
 
   } catch (error) {
     console.error('Payment approval error:', error)

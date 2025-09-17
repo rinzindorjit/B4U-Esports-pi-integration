@@ -5,6 +5,7 @@ import { z } from 'zod'
 const piLoginSchema = z.object({
   piUserId: z.string(),
   piUsername: z.string(),
+  piWalletAddress: z.string().optional(), // Make wallet address optional for backward compatibility
   accessToken: z.string()
 })
 
@@ -15,7 +16,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     console.log('Request body:', { ...body, accessToken: '[REDACTED]' })
     
-    const { piUserId, piUsername, accessToken } = piLoginSchema.parse(body)
+    const { piUserId, piUsername, piWalletAddress, accessToken } = piLoginSchema.parse(body)
 
     // Check database connection and handle potential issues
     let user
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
           id: `fallback_${piUserId}`,
           piUserId,
           piUsername,
-          piWalletAddress: `fallback_wallet_${piUserId.slice(0, 8)}`,
+          piWalletAddress: piWalletAddress || `fallback_wallet_${piUserId.slice(0, 8)}`,
           email: `${piUsername}@fallback.com`,
           contactNumber: null,
           country: null,
@@ -71,15 +72,15 @@ export async function POST(request: NextRequest) {
     if (!user) {
       console.log('Creating new user')
       // Create new user
-      // For now, we'll generate a mock wallet address since we don't have real Pi integration
-      const mockWalletAddress = `demo_wallet_${piUserId.slice(0, 8)}`
+      // Use the provided wallet address or generate a mock one
+      const walletAddress = piWalletAddress || `demo_wallet_${piUserId.slice(0, 8)}`
       
       try {
         user = await prisma.user.create({
           data: {
             piUserId,
             piUsername,
-            piWalletAddress: mockWalletAddress,
+            piWalletAddress: walletAddress,
             email: `${piUsername}@demo.com`, // Will be updated in profile
           },
           include: {
@@ -101,7 +102,7 @@ export async function POST(request: NextRequest) {
             id: `new_fallback_${piUserId}`,
             piUserId,
             piUsername,
-            piWalletAddress: mockWalletAddress,
+            piWalletAddress: walletAddress,
             email: `${piUsername}@demo.com`,
             contactNumber: null,
             country: null,
@@ -140,6 +141,28 @@ export async function POST(request: NextRequest) {
       } catch (consentError) {
         console.warn('Consent logging failed:', consentError)
         // Don't fail the whole request for consent logging issues
+      }
+    } else {
+      // Update existing user with wallet address if it wasn't set before
+      if (piWalletAddress && !user.piWalletAddress) {
+        try {
+          user = await prisma.user.update({
+            where: { id: user.id },
+            data: { piWalletAddress },
+            include: {
+              pubgProfile: true,
+              mlbbProfile: true,
+              transactions: {
+                take: 10,
+                orderBy: { createdAt: 'desc' },
+                include: { package: true }
+              }
+            }
+          })
+          console.log('Updated user with wallet address')
+        } catch (updateError) {
+          console.warn('Failed to update user with wallet address:', updateError)
+        }
       }
     }
 

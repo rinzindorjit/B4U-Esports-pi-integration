@@ -107,6 +107,7 @@ export default function PurchaseModal({ isOpen, package: pkg, onClose, onPurchas
 Transaction ID: ${transaction.id}
 Pi Payment ID: ${paymentId}
 
+Please check your Pi wallet to confirm the payment of ${piAmount.toFixed(4)} Pi.
 Your ${pkg.amount.toLocaleString()} ${getCurrency(pkg.game)} will be delivered once the payment is completed.`)
         
       } catch (piError) {
@@ -290,7 +291,7 @@ Please try again.`)
                   Diamonds will be delivered to User ID: <strong>{user?.mlbbProfile?.userId_game}</strong> (Zone: {user?.mlbbProfile?.zoneId})
                 </p>
               </div>
-            )}
+           )}
 
             {/* Testnet Notice */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">

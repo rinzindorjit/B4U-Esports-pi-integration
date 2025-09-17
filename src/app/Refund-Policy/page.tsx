@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 
-export default function UserAgreementPage() {
+export default function RefundPolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -24,7 +24,7 @@ export default function UserAgreementPage() {
             </Link>
             <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4">
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                User Agreement
+                Refund Policy
               </span>
             </h1>
           </div>
@@ -32,52 +32,42 @@ export default function UserAgreementPage() {
           {/* Content */}
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/20 mb-12">
             <div className="prose prose-invert max-w-none">
-              <p className="text-gray-300 mb-6">
-                This User Agreement governs your use of the B4U Esports gaming marketplace platform.
-              </p>
-              
-              <h2 className="text-2xl font-bold text-white mb-4">1. Agreement Overview</h2>
-              <p className="text-gray-300 mb-6">
-                By creating an account or using our services, you agree to be bound by this Agreement and our Terms of Service.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">2. Pi Network Integration Consent</h2>
-              <p className="text-gray-300 mb-6">
-                By using B4U Esports, you explicitly consent to connecting your Pi Network account for authentication and payments.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">3. Gaming Account Requirements</h2>
-              <p className="text-gray-300 mb-6">
-                You agree to provide accurate gaming account information and warrant that you own or have authorized access 
-                to the gaming accounts you specify.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">4. Purchase Agreement</h2>
-              <p className="text-gray-300 mb-6">
-                You acknowledge that all digital currency purchases are final and non-refundable. Prices are displayed in 
-                both USDT and Pi cryptocurrency, with Pi amounts calculated using real-time exchange rates.
-              </p>
-
-              <h2 className="text-2xl font-bold text-white mb-4">5. Testnet Operations Agreement</h2>
-              <div className="bg-blue-500/20 border border-blue-500/50 rounded-xl p-4 mb-6">
-                <p className="text-blue-200">
-                  <strong>Current Status:</strong> B4U Esports operates on Pi Network's testnet for secure testing and development.
-                  No real Pi coins from your mainnet wallet will be deducted during testing.
+              <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-6">
+                <h3 className="text-xl font-bold text-red-300 mb-2">Important Notice</h3>
+                <p className="text-red-200">
+                  All sales of digital in-game currency are final and non-refundable.
                 </p>
               </div>
-
-              <h2 className="text-2xl font-bold text-white mb-4">6. User Conduct Agreement</h2>
+              
+              <h2 className="text-2xl font-bold text-white mb-4">1. No Refund Policy</h2>
+              <p className="text-gray-300 mb-6">
+                B4U Esports operates a strict no-refund policy for all digital in-game currency purchases, including but not limited to:
+              </p>
               <ul className="text-gray-300 mb-6 space-y-2">
-                <li>Use the platform only for legitimate gaming currency purchases</li>
-                <li>Provide accurate and truthful information</li>
-                <li>Respect intellectual property rights</li>
-                <li>Comply with all applicable laws and regulations</li>
+                <li>PUBG Mobile UC (Unknown Cash)</li>
+                <li>Mobile Legends: Bang Bang Diamonds</li>
+                <li>Any other in-game currencies or digital items</li>
               </ul>
 
-              <h2 className="text-2xl font-bold text-white mb-4">7. Risk Acknowledgment</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">2. Reasons for No Refund Policy</h2>
+              <ul className="text-gray-300 mb-6 space-y-2">
+                <li>Digital currencies are instantly delivered to your gaming account</li>
+                <li>In-game currencies cannot be retrieved once delivered</li>
+                <li>Digital products have no physical return mechanism</li>
+                <li>Blockchain transactions are irreversible</li>
+              </ul>
+
+              <h2 className="text-2xl font-bold text-white mb-4">3. Delivery Issues</h2>
               <p className="text-gray-300 mb-6">
-                You acknowledge and accept risks including cryptocurrency value fluctuations, technical issues, and changes 
-                to game publisher terms or Pi Network operations.
+                If you experience delivery issues, we will investigate and attempt to resolve them within 24-48 hours. 
+                Resolution efforts do not constitute a refund guarantee. We will work to deliver the purchased currency, 
+                not provide monetary refunds.
+              </p>
+
+              <h2 className="text-2xl font-bold text-white mb-4">4. Exceptional Circumstances</h2>
+              <p className="text-gray-300 mb-6">
+                Refunds may be considered only in exceptional circumstances such as proven system errors resulting in 
+                duplicate charges or unauthorized transactions with proper evidence.
               </p>
             </div>
           </div>
