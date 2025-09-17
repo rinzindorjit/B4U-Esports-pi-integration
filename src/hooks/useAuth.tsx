@@ -208,8 +208,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext)
+  // Return a default context value during SSR/static generation to prevent errors
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    return {
+      user: null,
+      piAuth: null,
+      isLoading: true,
+      isAuthenticated: false,
+      login: async () => {},
+      logout: () => {},
+      updateProfile: () => {},
+      refreshUserData: async () => {}
+    }
   }
   return context
 }

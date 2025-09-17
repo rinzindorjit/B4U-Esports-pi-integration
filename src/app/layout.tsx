@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
+// Import Inter font with local fallback
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '../hooks/useAuth'
 
-const inter = Inter({ subsets: ['latin'] })
+// Use local fallback for Inter font
+const inter = Inter({ 
+  subsets: ['latin'],
+  fallback: ['system-ui', 'arial', 'sans-serif']
+})
 
 export const metadata: Metadata = {
   title: 'B4U Esports - Pi Network Gaming Marketplace',

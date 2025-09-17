@@ -18,7 +18,7 @@ interface AdminStats {
 }
 
 export default function AdminDashboard() {
-  const { user } = useAuth()
+  const { user, isLoading: authLoading } = useAuth()
   const { price: piPrice } = usePiPrice()
   const router = useRouter()
   const [stats, setStats] = useState<AdminStats | null>(null)
@@ -32,12 +32,18 @@ export default function AdminDashboard() {
                   user?.email === 'admin@b4uesports.com'
 
   useEffect(() => {
-    if (!isAdmin && user) {
+    // Redirect if not authenticated and not loading
+    if (!authLoading && !user) {
       router.push('/dashboard')
       return
     }
     
-    if (isAdmin) {
+    if (!authLoading && !isAdmin && user) {
+      router.push('/dashboard')
+      return
+    }
+    
+    if (!authLoading && isAdmin) {
       fetchAdminData()
       
       // Set up real-time refresh for admin dashboard
@@ -47,7 +53,7 @@ export default function AdminDashboard() {
       
       return () => clearInterval(interval)
     }
-  }, [user, isAdmin, router])
+  }, [user, isAdmin, router, authLoading])
 
   const fetchAdminData = async () => {
     try {
@@ -160,6 +166,17 @@ export default function AdminDashboard() {
           >
             Go to Dashboard
           </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Show loading state while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 flex items-center justify-center">
+        <div className="text-center text-white">
+          <h2 className="text-2xl font-bold mb-4">Loading admin panel...</h2>
         </div>
       </div>
     )
