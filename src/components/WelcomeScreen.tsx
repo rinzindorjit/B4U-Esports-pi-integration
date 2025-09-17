@@ -4,11 +4,14 @@ import PiLoginButton from './PiLoginButton'
 import PiPriceTicker from './PiPriceTicker'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth'
+import { useRouter } from 'next/navigation'
 
 export default function WelcomeScreen() {
   const [logoError, setLogoError] = useState(false)
   const [logoLoading, setLogoLoading] = useState(true)
+  const [retryCount, setRetryCount] = useState(0)
   const { user } = useAuth()
+  const router = useRouter()
   
   // Updated logo URL with transparent background
   const b4uLogoUrl = "https://emofly.b-cdn.net/hbd_exvhac6ayb3ZKT/width:640/plain/https://storage.googleapis.com/takeapp/media/clz8o83hw00020cla0wkze36l.png"
@@ -16,14 +19,27 @@ export default function WelcomeScreen() {
   // Handle logo loading error
   const handleLogoError = () => {
     console.log('Failed to load B4U Esports logo, using fallback')
-    setLogoError(true)
-    setLogoLoading(false)
+    // Retry up to 3 times
+    if (retryCount < 3) {
+      setTimeout(() => {
+        setRetryCount(prev => prev + 1)
+        setLogoLoading(true)
+        setLogoError(false)
+      }, 1000)
+    } else {
+      setLogoError(true)
+      setLogoLoading(false)
+    }
   }
 
   // Handle logo loading success
   const handleLogoLoad = () => {
     setLogoLoading(false)
   }
+
+  // Check if user is admin
+  const isAdmin = user?.piWalletAddress === 'GBP7PG27L3U4IQWFQGXNCHCGPJH3GVV72EEO4Q7RHFASMVR4TIA6J5F2' || 
+                  user?.email === 'admin@b4uesports.com'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
@@ -91,7 +107,7 @@ export default function WelcomeScreen() {
                 )}
                 
                 {!logoError && !logoLoading ? (
-                  // Using img tag for the new logo URL with transparent background
+                // Using img tag for the new logo URL with transparent background
                   <img
                     src={b4uLogoUrl}
                     alt="B4U Esports Logo"
@@ -104,7 +120,7 @@ export default function WelcomeScreen() {
                 ) : null}
                 
                 {logoError && (
-                  // Fallback to a simple text logo if image fails to load
+                // Fallback to a simple text logo if image fails to load
                   <div className="mx-auto w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
                     <span className="text-white font-bold text-lg sm:text-xl md:text-2xl">B4U</span>
                   </div>
@@ -122,7 +138,7 @@ export default function WelcomeScreen() {
               </span>
             </h1>
             
-            {/* Show user info if authenticated */}
+            {/* Show user info and navigation if authenticated */}
             {user && (
               <div className="mt-4 p-3 bg-white/10 backdrop-blur-lg rounded-lg border border-white/20 max-w-md mx-auto">
                 <p className="text-gray-200 text-sm sm:text-base">
@@ -131,6 +147,22 @@ export default function WelcomeScreen() {
                 <p className="text-gray-300 text-xs mt-1 truncate">
                   Wallet: {user.piWalletAddress || 'Not available'}
                 </p>
+                <div className="flex justify-center space-x-2 mt-3">
+                  <button
+                    onClick={() => router.push('/dashboard')}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                  >
+                    Dashboard
+                  </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => router.push('/admin')}
+                      className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm"
+                    >
+                      Admin Panel
+                    </button>
+                  )}
+                </div>
               </div>
             )}
             

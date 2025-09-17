@@ -76,6 +76,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Error refreshing user data:', error)
+      // Even if API fails, try to use cached data
+      const cachedData = localStorage.getItem('user_data')
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData)
+          setUser(parsedData)
+        } catch (parseError) {
+          console.error('Error parsing cached user data:', parseError)
+          localStorage.removeItem('user_data')
+        }
+      }
     }
   }
 

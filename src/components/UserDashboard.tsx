@@ -223,6 +223,10 @@ export default function UserDashboard() {
     setShowProfileForm(false)
   }
 
+  // Check if user is admin
+  const isAdmin = user?.piWalletAddress === 'GBP7PG27L3U4IQWFQGXNCHCGPJH3GVV72EEO4Q7RHFASMVR4TIA6J5F2' || 
+                  user?.email === 'admin@b4uesports.com'
+
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 flex items-center justify-center">
@@ -304,6 +308,19 @@ export default function UserDashboard() {
                 >
                   Profile
                 </button>
+                {isAdmin && (
+                  <Link href="/admin">
+                    <button 
+                      className={`px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium border ${
+                        activeTab === 'admin' 
+                          ? 'bg-white/20 text-white border-white/40' 
+                          : 'text-gray-300 hover:text-white hover:bg-white/10 border-white/20'
+                      }`}
+                    >
+                      Admin
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
             
@@ -364,6 +381,19 @@ export default function UserDashboard() {
             >
               Profile
             </button>
+            {isAdmin && (
+              <Link href="/admin">
+                <button 
+                  className={`px-3 py-1.5 rounded-lg transition-all duration-300 text-xs font-medium ${
+                    activeTab === 'admin' 
+                      ? 'bg-white/20 text-white' 
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  Admin
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
