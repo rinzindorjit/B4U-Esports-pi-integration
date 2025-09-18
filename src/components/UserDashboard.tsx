@@ -7,6 +7,7 @@ import Image from 'next/image'
 import UserProfileForm from './UserProfileForm'
 import PurchaseModal from './PurchaseModal'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 // Mock packages data for showcase
 const FEATURED_PACKAGES: Package[] = [
@@ -59,6 +60,7 @@ const FEATURED_PACKAGES: Package[] = [
 export default function UserDashboard() {
   const { user, logout, refreshUserData } = useAuth()
   const { price: piPrice } = usePiPrice()
+  const router = useRouter()
   const [transactions, setTransactions] = useState<TransactionWithPackage[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showProfileForm, setShowProfileForm] = useState(false)
@@ -311,8 +313,9 @@ export default function UserDashboard() {
                 {isAdmin && (
                   <Link href="/admin">
                     <button 
+                      onClick={() => router.push('/admin')}
                       className={`px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium border ${
-                        activeTab === 'admin' 
+                        activeTab === 'overview' 
                           ? 'bg-white/20 text-white border-white/40' 
                           : 'text-gray-300 hover:text-white hover:bg-white/10 border-white/20'
                       }`}
@@ -382,17 +385,16 @@ export default function UserDashboard() {
               Profile
             </button>
             {isAdmin && (
-              <Link href="/admin">
-                <button 
-                  className={`px-3 py-1.5 rounded-lg transition-all duration-300 text-xs font-medium ${
-                    activeTab === 'admin' 
-                      ? 'bg-white/20 text-white' 
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Admin
-                </button>
-              </Link>
+              <button 
+                onClick={() => router.push('/admin')}
+                className={`px-3 py-1.5 rounded-lg transition-all duration-300 text-xs font-medium ${
+                  activeTab === 'overview' 
+                    ? 'bg-white/20 text-white' 
+                    : 'text-gray-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                Admin
+              </button>
             )}
           </div>
         </div>
@@ -629,7 +631,7 @@ export default function UserDashboard() {
                   <div className="text-gray-300 text-sm group-hover:text-green-200">Secure Payments</div>
                 </div>
                 <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-gradient-to-r hover:from-purple-500/40 hover:to-pink-500/40 hover:border-purple-400/50 hover:scale-110 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
-                  <div className="text-2xl font-bold text-white mb-1 group-hover:text-purple-300 group-hover:animate-spin">🎆 1M+</div>
+                  <div className="text-2xl font-bold text-white mb-1 group-hover:text-purple-300 group-hover:animate-spin">eğ 1M+</div>
                   <div className="text-gray-300 text-sm group-hover:text-purple-200">Happy Gamers</div>
                 </div>
                 <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-gradient-to-r hover:from-yellow-500/40 hover:to-orange-500/40 hover:border-yellow-400/50 hover:scale-110 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
@@ -863,6 +865,8 @@ export default function UserDashboard() {
             </div>
           </div>
         )}
+
+        {/* The admin tab content is removed since we're routing to /admin directly */}
       </div>
 
       {/* Modals */}
