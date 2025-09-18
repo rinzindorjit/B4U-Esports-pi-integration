@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import PiLoginButton from './PiLoginButton'
 import PiPriceTicker from './PiPriceTicker'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useRouter } from 'next/navigation'
 
@@ -12,21 +12,36 @@ export default function WelcomeScreen() {
   const [retryCount, setRetryCount] = useState(0)
   const { user } = useAuth()
   const router = useRouter()
+  const logoRef = useRef<HTMLImageElement>(null)
   
-  // Updated logo URL with transparent background
-  const b4uLogoUrl = "https://emofly.b-cdn.net/hbd_exvhac6ayb3ZKT/width:640/plain/https://storage.googleapis.com/takeapp/media/clz8o83hw00020cla0wkze36l.png"
+  // Primary logo URL with transparent background
+  const primaryLogoUrl = "https://b4uesports.com/wp-content/uploads/2025/04/cropped-Black_and_Blue_Simple_Creative_Illustrative_Dragons_E-Sport_Logo_20240720_103229_0000-removebg-preview.png"
+  // Fallback logo URL
+  const fallbackLogoUrl = "https://storage.googleapis.com/takeapp/media/clz8o83hw00020cla0wkze36l.png"
+  
+  // Get the appropriate logo URL based on retry count
+  const getLogoUrl = () => {
+    // Use fallback URL on the last retry attempt
+    return retryCount >= 2 ? fallbackLogoUrl : primaryLogoUrl
+  }
   
   // Handle logo loading error
   const handleLogoError = () => {
-    console.log('Failed to load B4U Esports logo, using fallback')
-    // Retry up to 3 times
+    console.log(`Failed to load B4U Esports logo (attempt ${retryCount + 1})`)
+    // Retry up to 3 times with exponential backoff
     if (retryCount < 3) {
+      const retryDelay = Math.pow(2, retryCount) * 1000 // 1s, 2s, 4s
       setTimeout(() => {
         setRetryCount(prev => prev + 1)
         setLogoLoading(true)
         setLogoError(false)
-      }, 1000)
+        // Force reload the image with appropriate URL
+        if (logoRef.current) {
+          logoRef.current.src = `${getLogoUrl()}?retry=${retryCount + 1}&t=${Date.now()}`
+        }
+      }, retryDelay)
     } else {
+      console.log('All retry attempts failed, using fallback')
       setLogoError(true)
       setLogoLoading(false)
     }
@@ -34,7 +49,9 @@ export default function WelcomeScreen() {
 
   // Handle logo loading success
   const handleLogoLoad = () => {
+    console.log('B4U Esports logo loaded successfully')
     setLogoLoading(false)
+    setLogoError(false)
   }
 
   // Check if user is admin
@@ -109,7 +126,8 @@ export default function WelcomeScreen() {
                 {!logoError && !logoLoading ? (
                 // Using img tag for the new logo URL with transparent background
                   <img
-                    src={b4uLogoUrl}
+                    ref={logoRef}
+                    src={getLogoUrl()}
                     alt="B4U Esports Logo"
                     width="120"
                     height="120"
